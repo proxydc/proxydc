@@ -49,10 +49,10 @@ export default {
         });
         if (result.status == 200) {
           const resp = result.data;
-          localStorage.setItem("jour", new Date().getDate());
+         /* localStorage.setItem("jour", new Date().getDate());
           localStorage.setItem("heure", new Date().getHours());
           localStorage.setItem("minute", new Date().getMinutes());
-          alert("current: " + new Date().getMinutes());
+          alert("current: " + new Date().getMinutes());*/
           localStorage.setItem(
             "token",
             "hdsfhqishiofhiqsdhfhdksqhfklmqjdmsfjildjsfioj7467d687dfsgnjklfhnglk46396fdgnlkjndflkg646346drg,fkldjg"
