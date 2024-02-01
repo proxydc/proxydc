@@ -1,0 +1,57 @@
+<template>
+  <div>
+    <h5>{{ title }}</h5>
+    <div id="techn">
+      <input
+        v-for="(ability, index) in functionalAbilities"
+        :value="ability"
+        :key="index"
+        class="form-control dc-vlist"
+        type="text"
+      />
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-outline-primary btn-sm"
+      @click="addRow"
+    >
+      Ajouter une compétence
+    </button>
+  </div>
+</template>
+
+<script>
+export default {
+ /* data() {
+    return {
+      uid: "",
+      titile: "",
+      functionalAbilities: [],
+      error: "",
+    };
+  },*/
+  props: {
+    title: {
+      type: String,
+      required: true,
+    },
+    uid: {
+      type: String,
+      required: true,
+    },
+    functionalAbilities: [],
+  },
+  methods: {
+    addRow() {
+      var container = document.getElementById("techn");
+      var newInput = document.createElement("input");
+      newInput.classList = "form-control dc-vlist dc-tmp";
+      container.appendChild(newInput);
+    },
+  },
+};
+</script>
+
+<style scoped>
+</style>
