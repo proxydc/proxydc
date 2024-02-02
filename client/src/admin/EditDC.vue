@@ -35,24 +35,20 @@
         placeholder="Enter tags"
         class="form-control"
       />
-      <div>
-        <label for="lbstatus">Status</label>
-        <input
-        type="text"
-        id="lbstatus"
-        list="names"
-        v-model="model.candidat.status"
-        placeholder="Enter status"
-        class="form-control"
-      />
-      <datalist id="names">
+      <label for="lbstatus">Status:</label>
+      <select
+        v-model="model.candidat.dc_status"
+        id="lbstatus">
         <option v-bind:value="1">Initialisé</option>
         <option v-bind:value="2">Saisie Encours</option>
         <option v-bind:value="3">Finalisé</option>
         <option v-bind:value="4">Terminé</option>
-      </datalist>      
+      </select>
+      <br/><br/>
+      <div>
+        <button v-on:click="updateCandidat">Update Candidat</button>
+        <br/><br/>
       </div>
-      <button v-on:click="updateCandidat">Update Candidat</button>
     </div>
   </div>
 </template>
@@ -72,9 +68,9 @@ export default {
           firstname: { type: String, required: true },
           familyname: { type: String, required: true },
           email: { type: String, required: true },
-          status: {type: Number},
-          status_name: {type: String},
-          tags: {type: String},
+          dc_status: { type: Number },
+          status_name: { type: String },
+          tags: { type: String },
         },
       },
     };
@@ -85,7 +81,7 @@ export default {
 
   methods: {
     getCandidatData(dcId) {
-      const url = urldc.getDcUrl(dcId);// `http://localhost:3000/api/v1/database/dc/${dcId}`;
+      const url = urldc.getDcUrl(dcId); // `http://localhost:3000/api/v1/database/dc/${dcId}`;
       alert("url: " + url);
       axios
         .get(url)
@@ -101,14 +97,14 @@ export default {
     },
 
     async updateCandidat() {
-      alert("status: "+ this.model.candidat.status);
+      alert("status: " + this.model.candidat.dc_status);
       try {
         const url = urldc.getDcAdminUrl(this.model.candidat.id);
         let result = await axios.put(url, {
           familyname: this.model.candidat.familyname,
           firstname: this.model.candidat.firstname,
           email: this.model.candidat.email,
-          dc_status: this.model.candidat.status,
+          dc_status: this.model.candidat.dc_status,
           tags: this.model.candidat.tags,
         });
         console.log(result);
@@ -125,62 +121,4 @@ export default {
 </script>
 
 <style scoped>
-.example {
-  margin: 20px;
-}
-
-.example input {
-  display: none;
-}
-
-.example label {
-  margin-right: 20px;
-  display: inline-block;
-  cursor: pointer;
-}
-
-.ex1 span {
-  display: block;
-  padding: 5px 10px 5px 25px;
-  border: 2px solid #ddd;
-  border-radius: 5px;
-  position: relative;
-  transition: all 0.25s linear;
-}
-
-.ex1 span:before {
-  content: "";
-  position: absolute;
-  left: 5px;
-  top: 50%;
-  -webkit-transform: translatey(-50%);
-  transform: translatey(-50%);
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background-color: #ddd;
-  transition: all 0.25s linear;
-}
-
-.ex1 input:checked + span {
-  background-color: #fff;
-  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.1);
-}
-.ex1 .red input:checked + span {
-  color: red;
-  border-color: red;
-}
-
-.ex1 .red input:checked + span:before {
-  background-color: red;
-}
-
-.ex1 .blue input:checked + span {
-  color: blue;
-  border-color: blue;
-}
-
-.ex1 .blue input:checked + span:before {
-  background-color: blue;
-}
 </style>
