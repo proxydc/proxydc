@@ -9,6 +9,7 @@
       <label for="lbemail">Email</label>
       <input type="email" v-model="model.dc.email" placeholder="Enter Email" id="lbemail" class="form-control" />
       <button v-on:click="addDC">Add Candidat</button>
+      <br/><br/>
     </div>
   </div>
 </template>
