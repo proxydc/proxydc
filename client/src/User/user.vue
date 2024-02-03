@@ -1,18 +1,14 @@
 <template>
   <div>
     <div class="d-flex gap-2 py-3">
-      <button
-        type="button"
-        class="btn btn-outline-primary"
-        @click="openAddDC()"
-      >
+      <button type="button" class="btn btn-outline-primary" @click="openAddDC()">
         Nouveau candidat
       </button>
     </div>
     <div class="container">
       <div class="row">
         <div class="col">
-          <table class="table table-hover">
+          <table id="usertable" class="table table-striped" style="width:100%">
             <thead>
               <tr>
                 <th scope="col">Nom</th>
@@ -34,30 +30,14 @@
                   <a class="btn btn-success mx-2" :href="'/editDC/' + acRow.id">
                     Edit
                   </a>
-                  <button
-                    type="button"
-                    class="btn btn-danger mx-2"
-                    @click="deleteDC(acRow.id)"
-                  >
+                  <button type="button" class="btn btn-danger mx-2" @click="deleteDC(acRow.id)">
                     Delete
                   </button>
-                  <a
-                    class="btn btn-outline-primary btn-sm"
-                    :href="'/formCandidatSaisie/' + acRow.id"
-                    target="_blank"
-                  >
+                  <a class="btn btn-outline-primary btn-sm" :href="'/formCandidatSaisie/' + acRow.id" target="_blank">
                     Voir le dossier
                   </a>
-                  <img              
-                    type="button"
-                    src="../assets/copyimage.png"
-                    @click="CopyUrl(acRow.id)"
-                  />
-                  <a
-                    class="btn btn-outline-primary btn-sm mx-2"
-                    :href="'/dcDownload/' + acRow.id"
-                    target="_blank"
-                  >
+                  <img type="button" src="../assets/copyimage.png" @click="CopyUrl(acRow.id)" />
+                  <a class="btn btn-outline-primary btn-sm mx-2" :href="'/dcDownload/' + acRow.id" target="_blank">
                     Download
                   </a>
                 </td>
@@ -67,7 +47,7 @@
         </div>
       </div>
     </div>
-    <div>   
+    <div>
     </div>
   </div>
 </template>
@@ -76,6 +56,15 @@
 import Admin_Layout from "../admin/admin_Layout.vue";
 import axios from "axios";
 import urldc from "../_helpers/urllist.js";
+/*import '../assets/dataTables.bootstrap5.min.css';
+import '../assets/bootstrap.min.css';
+import '../assets/jquery-3.7.1.js';
+import '../assets/jquery.dataTables.min.js';
+import '../assets/dataTables.bootstrap5.min.js';*/
+import $ from "jquery";
+//import '../assets/gridUser.js';
+//import '../assets/grid.js';
+//import DataTable from 'datatables.net-bs5';
 export default {
   name: "user",
   data() {
@@ -86,19 +75,31 @@ export default {
   },
   mounted() {
     try {
+      /*$(document).ready(function () {
+        $('#usertable').DataTable();
+      });*/
       this.getDCs();
       console.log("data: " + this.AcRows);
+     
     } catch (err) {
       this.error = err.message;
     }
   },
+  created() {
+
+    //new DataTable('#example');
+
+  },
   methods: {
     getDCs() {
-      const url = urldc.getDcsUrl(); 
+      const url = urldc.getDcsUrl();
       //alert("urldc: " + url);
       axios.get(url).then((res) => {
         console.log(res.data);
         this.AcRows = res.data;
+        $(document).ready(function () {
+        $('#usertable').DataTable();
+      });
       });
     },
     openAddDC() {
@@ -107,7 +108,7 @@ export default {
     deleteDC(dcId) {
       alert("DC: " + dcId);
       if (confirm("Are you sure, you want to delete this dc. DC Id: " + dcId)) {
-        const url = urldc.getDelDcUrl(dcId); 
+        const url = urldc.getDelDcUrl(dcId);
         alert("url: " + url);
         axios
           .delete(url)
@@ -128,7 +129,7 @@ export default {
       self.$router.push(`/formCandidatSaisie/${dcId}`);
     },
     CopyUrl(id) {
-      var content = "http://localhost:8080/formCandidatSaisie/"+id;
+      var content = "http://localhost:8080/formCandidatSaisie/" + id;
       navigator.clipboard.writeText(content);
     },
   },
@@ -142,6 +143,7 @@ export default {
 a.btn-sm {
   margin-right: 5px;
 }
+
 img {
   border: 1px solid #ddd;
   border-radius: 1px;

@@ -21,7 +21,7 @@
                 <a class="nav-link active" aria-current="page" href="/admin">Users</a>
               </li>
             <!--  <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/">Se déconnecter</a>
+                <a class="nav-link" aria-current="page" href="/">Se déconnecter</a> v-on:click="RedirectUser()"
               </li> -->
             </ul>
 
@@ -42,7 +42,11 @@ export default {
         getUser(){
             //alert("iam in get user");
             return localStorage.getItem('useraccount')
-        }
+        },
+        /*RedirectUser(){
+          let self = this;
+          self.$router.push({ name: "user" });
+        }*/
     }
 }
 </script>

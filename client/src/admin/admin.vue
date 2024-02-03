@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col">
-          <table class="table table-hover">
+          <table id="admintable" class="table table-striped" style="width:100%">
             <thead>
               <tr>
                 <th scope="col">Id</th>
@@ -40,6 +40,12 @@
 import axios from "axios";
 import Admin_Layout from "../admin/admin_Layout.vue";
 import urlacc from "../_helpers/urllist.js";
+/*import '../assets/jquery-3.7.0.js';
+import '../assets/jquery.dataTables.min.js';
+import '../assets/dataTables.bootstrap5.min.css';
+import '../assets/dataTables.bootstrap5.min.js';
+import '../assets/bootstrap.min.css';*/
+import $ from "jquery";
 export default {
     name: "admin",
     data() {
@@ -50,6 +56,7 @@ export default {
     },
     mounted() {
         try {
+         
             this.getLogins();
             console.log("data: " + this.AcRows);
         }
@@ -63,6 +70,9 @@ export default {
             axios.get(url).then(res => {
                 console.log(res.data);
                 this.AcRows = res.data;
+                $(document).ready(function () {
+        $('#admintable').DataTable();
+      });
             });
         },
         deleteAccount(accountId) {

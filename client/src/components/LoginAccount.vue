@@ -57,11 +57,13 @@ export default {
             "token",
             "hdsfhqishiofhiqsdhfhdksqhfklmqjdmsfjildjsfioj7467d687dfsgnjklfhnglk46396fdgnlkjndflkg646346drg,fkldjg"
           );
+         // let self = this;
           if (resp == 1) {
             localStorage.setItem("useraccount", "admin");
             this.$router.push({ name: "admin" });
+           // this.$router.push(`/admin`);
           } else {
-            localStorage.setItem("useraccount", "user");
+            localStorage.setItem("useraccount", "user");            
             this.$router.push({ name: "user" });
           }
         } else {
