@@ -20,7 +20,7 @@
         placeholder="Enter Password"
         class="form-control"
       />
-      <button v-on:click="login">Login!</button>
+      <button class="js-new" v-on:click="login" >Login!</button>
       <p>
         <router-link to="/">Home</router-link>
       </p>
@@ -31,7 +31,7 @@
 <script>
 import urlacc from "../_helpers/urllist.js";
 import axios from "axios";
-
+import $ from "jquery";
 export default {
   name: "LoginAccount",
   data() {
@@ -40,6 +40,14 @@ export default {
       error: "",
     };
   },
+ mounted(){
+  $(document).keypress(function(e) {
+    if(e.which === 13) {
+        // enter has been pressed, execute a click on .js-new:
+        $(".js-new").first().click();
+    }
+});
+ },
   methods: {
     async login() {
       try {
@@ -49,19 +57,13 @@ export default {
         });
         if (result.status == 200) {
           const resp = result.data;
-         /* localStorage.setItem("jour", new Date().getDate());
-          localStorage.setItem("heure", new Date().getHours());
-          localStorage.setItem("minute", new Date().getMinutes());
-          alert("current: " + new Date().getMinutes());*/
           localStorage.setItem(
             "token",
             "hdsfhqishiofhiqsdhfhdksqhfklmqjdmsfjildjsfioj7467d687dfsgnjklfhnglk46396fdgnlkjndflkg646346drg,fkldjg"
           );
-         // let self = this;
           if (resp == 1) {
             localStorage.setItem("useraccount", "admin");
             this.$router.push({ name: "admin" });
-           // this.$router.push(`/admin`);
           } else {
             localStorage.setItem("useraccount", "user");            
             this.$router.push({ name: "user" });

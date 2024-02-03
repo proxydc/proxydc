@@ -143,7 +143,7 @@ const xpAddedCounter = ref(0);
 
       <div class="row text-center">
         <div class="col">
-          <button type="button" class="btn btn-outline-primary btn-sm" @click="addRowXpPro">
+          <button type="button" class="btn btn-outline-info btn-sm" @click="addRowXpPro">
             Nouvelle experience professionnelle
           </button>
         </div>

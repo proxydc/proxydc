@@ -129,7 +129,7 @@ const xpAddedCounter = ref(0);
 
       <div class="row text-center">
         <div class="col">
-          <button type="button" class="btn btn-outline-warning btn-sm" @click="addRowProjectPerso">
+          <button type="button" class="btn btn-outline-info btn-sm" @click="addRowProjectPerso">
             Nouvelle experience personnelle
           </button>
         </div>

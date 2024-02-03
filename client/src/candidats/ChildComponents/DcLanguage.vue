@@ -55,7 +55,7 @@ function saveData() {
       <div class="col text-center">
         <button
           type="button"
-          class="btn btn-outline-primary btn-sm"
+          class="btn btn-outline-info btn-sm"
           @click="addRow"
         >
           Ajouter une langue

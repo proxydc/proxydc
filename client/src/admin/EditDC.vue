@@ -36,7 +36,8 @@
         class="form-control"
       />
       <label for="lbstatus">Status:</label>
-      <select
+      <div style="overflow:hidden;">
+      <select class="selectpicker show-tick" 
         v-model="model.candidat.dc_status"
         id="lbstatus">
         <option v-bind:value="1">Initialisé</option>
@@ -44,8 +45,9 @@
         <option v-bind:value="3">Finalisé</option>
         <option v-bind:value="4">Terminé</option>
       </select>
-      <br/><br/>
-      <div>
+    </div>
+    <br/>
+      <div style="overflow:hidden;">
         <button v-on:click="updateCandidat">Update Candidat</button>
         <br/><br/>
       </div>
@@ -81,7 +83,7 @@ export default {
 
   methods: {
     getCandidatData(dcId) {
-      const url = urldc.getDcUrl(dcId); // `http://localhost:3000/api/v1/database/dc/${dcId}`;
+      const url = urldc.getDcUrl(dcId);
       alert("url: " + url);
       axios
         .get(url)

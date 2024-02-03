@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">
+    <div class="container p-3 my-5 bg-light border border-primary">
       <div class="row">
         <div class="col">
           <table id="admintable" class="table table-striped" style="width:100%">
@@ -40,11 +40,6 @@
 import axios from "axios";
 import Admin_Layout from "../admin/admin_Layout.vue";
 import urlacc from "../_helpers/urllist.js";
-/*import '../assets/jquery-3.7.0.js';
-import '../assets/jquery.dataTables.min.js';
-import '../assets/dataTables.bootstrap5.min.css';
-import '../assets/dataTables.bootstrap5.min.js';
-import '../assets/bootstrap.min.css';*/
 import $ from "jquery";
 export default {
     name: "admin",

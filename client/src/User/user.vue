@@ -5,47 +5,43 @@
         Nouveau candidat
       </button>
     </div>
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <table id="usertable" class="table table-striped" style="width:100%">
-            <thead>
-              <tr>
-                <th scope="col">Nom</th>
-                <th scope="col">Prénom</th>
-                <th scope="col">Email</th>
-                <th scope="col">Status</th>
-                <th scope="col">Tags</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody class="table-group-divider">
-              <tr v-for="(acRow, index) in this.AcRows" :key="index">
-                <td>{{ acRow.familyname }}</td>
-                <td>{{ acRow.firstname }}</td>
-                <td>{{ acRow.email }}</td>
-                <td>{{ acRow.status_name }}</td>
-                <td>{{ acRow.tags }}</td>
-                <td>
-                  <a class="btn btn-success mx-2" :href="'/editDC/' + acRow.id">
-                    Edit
-                  </a>
-                  <button type="button" class="btn btn-danger mx-2" @click="deleteDC(acRow.id)">
-                    Delete
-                  </button>
-                  <a class="btn btn-outline-primary btn-sm" :href="'/formCandidatSaisie/' + acRow.id" target="_blank">
-                    Voir le dossier
-                  </a>
-                  <img type="button" src="../assets/copyimage.png" @click="CopyUrl(acRow.id)" />
-                  <a class="btn btn-outline-primary btn-sm mx-2" :href="'/dcDownload/' + acRow.id" target="_blank">
-                    Download
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <div class="container p-3 my-5 bg-light border border-primary">
+      <table id="usertable" class="table table-striped" style="width:100%">
+        <thead>
+          <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Email</th>
+            <th scope="col">Status</th>
+            <th scope="col">Tags</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          <tr v-for="(acRow, index) in this.AcRows" :key="index">
+            <td>{{ acRow.familyname }}</td>
+            <td>{{ acRow.firstname }}</td>
+            <td>{{ acRow.email }}</td>
+            <td>{{ acRow.status_name }}</td>
+            <td>{{ acRow.tags }}</td>
+            <td>
+              <a class="btn btn-success mx-2" :href="'/editDC/' + acRow.id">
+                Edit
+              </a>
+              <button type="button" class="btn btn-danger mx-2" @click="deleteDC(acRow.id)">
+                Delete
+              </button>
+              <a class="btn btn-outline-success btn-sm" :href="'/formCandidatSaisie/' + acRow.id" target="_blank">
+                Voir le dossier
+              </a>
+              <img type="button" class="btn btn-outline-warning btn-sm" src="../assets/copyimage.png" @click="CopyUrl(acRow.id)" />
+              <a class="btn btn-outline-primary btn-sm mx-2" :href="'/dcDownload/' + acRow.id" target="_blank">
+                Download
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div>
     </div>
@@ -56,15 +52,7 @@
 import Admin_Layout from "../admin/admin_Layout.vue";
 import axios from "axios";
 import urldc from "../_helpers/urllist.js";
-/*import '../assets/dataTables.bootstrap5.min.css';
-import '../assets/bootstrap.min.css';
-import '../assets/jquery-3.7.1.js';
-import '../assets/jquery.dataTables.min.js';
-import '../assets/dataTables.bootstrap5.min.js';*/
 import $ from "jquery";
-//import '../assets/gridUser.js';
-//import '../assets/grid.js';
-//import DataTable from 'datatables.net-bs5';
 export default {
   name: "user",
   data() {
@@ -80,7 +68,7 @@ export default {
       });*/
       this.getDCs();
       console.log("data: " + this.AcRows);
-     
+
     } catch (err) {
       this.error = err.message;
     }
@@ -98,8 +86,8 @@ export default {
         console.log(res.data);
         this.AcRows = res.data;
         $(document).ready(function () {
-        $('#usertable').DataTable();
-      });
+          $('#usertable').DataTable();
+        });
       });
     },
     openAddDC() {

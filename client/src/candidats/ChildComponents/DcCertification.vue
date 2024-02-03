@@ -5,14 +5,6 @@ export default {
     certifications: [],
   },
   methods: {
-    /*addRow() {
-      var existingCertsNodes = document.querySelectorAll("#certs div.row");
-      var newNode = existingCertsNodes[0].cloneNode(true);
-      newNode.classList = "row dc-tmp";
-      newNode.childNodes[0].childNodes[0].value = ""; // clean value for year
-      newNode.childNodes[1].childNodes[0].value = ""; // clean value for title
-      document.getElementById("certs").appendChild(newNode);
-    },*/
     addRow() {
       var newNode = document.getElementById("ghost_cert").cloneNode(true);
       newNode.id = "";
@@ -52,7 +44,7 @@ const certAddedCounter = ref(0);
         </div>
       </div>
     </div>
-    <button type="button" class="btn btn-outline-primary btn-sm" @click="addRow">
+    <button type="button" class="btn btn-outline-info btn-sm" @click="addRow">
       Ajouter un diplôme / une certification
     </button>
   </div>

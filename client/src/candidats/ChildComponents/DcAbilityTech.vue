@@ -13,7 +13,7 @@
 
     <button
       type="button"
-      class="btn btn-outline-primary btn-sm"
+      class="btn btn-outline-info btn-sm"
       @click="addRow"
     >
       Ajouter une compétence

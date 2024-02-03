@@ -7,8 +7,7 @@
       <div v-if="errormsg" class="alert alert-danger alert-dismissible fade show">
         <strong>Error!</strong> <br/>{{ errormsg }}
       </div>
-      <h5>{{ errormsg }}</h5>
-      <div class="container dc-form">
+      <div class="container p-3 my-5 bg-light border border-primary dc-form">
         <form action="" @submit.prevent="onSubmit">
           <dcIdentity
             :familyname="dc.familyname"
@@ -124,12 +123,12 @@
           <div class="row dc-section">
             <div class="col text-center">
               <div class="btn-group" role="group">
-                <button type="button" class="btn btn-warning" @click="save(dc)">
+                <button type="button" class="btn btn-primary" @click="save(dc)">
                   Enregistrer
                 </button>
                 <button
                   type="button"
-                  class="btn btn-success"
+                  class="btn btn-warning"
                   @click="saveAndClose(dc)"
                 >
                   Marquer comme finalisé
