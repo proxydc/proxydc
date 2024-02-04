@@ -3,31 +3,34 @@
     <h1>Edit Candidat</h1>
     <h2>{{ errorlst }}</h2>
     <div class="container w-50 p-3 my-1 bg-light border border-info">
-      <div class="register">
-        <label for="lbfamilyname">Nom</label>
-        <input type="text" v-model="model.candidat.familyname" class="form-control" id="lbfamilyname" disabled />
-        <label for="lbfirstname">Prénom</label>
-        <input type="text" id="lbfirstname" v-model="model.candidat.firstname" placeholder="Enter First Name"
-          class="form-control" />
-        <label for="lbemail">Email</label>
-        <input type="email" v-model="model.candidat.email" placeholder="Enter Email" id="lbemail" class="form-control" />
-        <label for="lbtags">Tags</label>
-        <input type="text" id="lbtags" v-model="model.candidat.tags" placeholder="Enter tags" class="form-control" />
-        <label for="lbstatus">Status:</label>
-        <div style="overflow:hidden;">
-          <select class="selectpicker show-tick" v-model="model.candidat.dc_status" id="lbstatus">
-            <option v-bind:value="1">Initialisé</option>
-            <option v-bind:value="2">Saisie Encours</option>
-            <option v-bind:value="3">Finalisé</option>
-            <option v-bind:value="4">Terminé</option>
-          </select>
+      <form class="was-validated" @submit.prevent="updateCandidat">
+        <div class="register">
+          <label for="lbfamilyname">Nom</label>
+          <input type="text" v-model="model.candidat.familyname" class="form-control" id="lbfamilyname" disabled />
+          <label for="lbfirstname">Prénom</label>
+          <input type="text" id="lbfirstname" v-model="model.candidat.firstname" placeholder="Enter First Name" required
+            class="form-control" />
+          <label for="lbemail">Email</label>
+          <input type="email" v-model="model.candidat.email" placeholder="Enter Email" id="lbemail" required
+            class="form-control" />
+          <label for="lbtags">Tags</label>
+          <input type="text" id="lbtags" v-model="model.candidat.tags" placeholder="Enter tags" class="form-control" />
+          <label for="lbstatus">Status:</label>
+          <div style="overflow:hidden;">
+            <select class="selectpicker show-tick" v-model="model.candidat.dc_status" id="lbstatus">
+              <option v-bind:value="1">Initialisé</option>
+              <option v-bind:value="2">Saisie Encours</option>
+              <option v-bind:value="3">Finalisé</option>
+              <option v-bind:value="4">Terminé</option>
+            </select>
+          </div>
+          <br />
+          <div style="overflow:hidden;">
+            <button type="submit" class="js-new">Update Candidat</button>
+            <br /><br />
+          </div>
         </div>
-        <br />
-        <div style="overflow:hidden;">
-          <button v-on:click="updateCandidat">Update Candidat</button>
-          <br /><br />
-        </div>
-      </div>
+      </form>
     </div>
   </div>
 </template>
@@ -35,7 +38,7 @@
 <script>
 import axios from "axios";
 import urldc from "../_helpers/urllist.js";
-
+import $ from "jquery";
 export default {
   name: "EditCandidat",
   data() {
@@ -56,6 +59,12 @@ export default {
   },
   mounted() {
     this.getCandidatData(this.$route.params.id);
+    $(document).keypress(function (e) {
+      if (e.which === 13) {
+        // enter has been pressed, execute a click on .js-new:
+        $(".js-new").first().click();
+      }
+    });
   },
 
   methods: {

@@ -3,14 +3,15 @@
     <h1>Edit Account</h1>
     <h2>{{ errorlst }}</h2>
     <div class="container w-50 p-3 my-1 bg-light border border-info">
+      <form class="was-validated" @submit.prevent="updateAccount">
       <div class="register">
         <label for="lblogin">Login Name</label>
         <input type="text" v-model="model.account.login_name" class="form-control" id="lblogin" disabled>
         <label for="lbdisplay">Display Name</label>
-        <input type="text" id="lbdisplay" v-model="model.account.display_name" placeholder="Enter Display Name"
+        <input type="text" id="lbdisplay" v-model="model.account.display_name" placeholder="Enter Display Name" required
           class="form-control" />
         <label for="lbpassword">Password</label>
-        <input type="password" v-model="model.account.pass_word" placeholder="Enter Password" id="lbpassword"
+        <input type="password" v-model="model.account.pass_word" placeholder="Enter Password" id="lbpassword" required
           class="form-control" />
         <div class="example ex1">
           <h5>Select Role</h5>
@@ -23,8 +24,9 @@
             <span>User</span>
           </label>
         </div>
-        <button v-on:click="updateAccount">Update Account</button>
+        <button  type="submit" class="js-new">Update Account</button>
       </div>
+      </form>      
     </div>
   </div>
 </template>
@@ -32,7 +34,7 @@
 <script>
 import urlacc from "../_helpers/urllist.js";
 import axios from "axios";
-
+import $ from "jquery";
 export default {
   name: "EditAccount",
   data() {
@@ -52,6 +54,12 @@ export default {
   },
   mounted() {
     this.getAccountData(this.$route.params.id);
+    $(document).keypress(function (e) {
+      if (e.which === 13) {
+        // enter has been pressed, execute a click on .js-new:
+        $(".js-new").first().click();
+      }
+    });
   },
 
   methods: {
