@@ -1,30 +1,26 @@
 <template>
   <div>
     <h1>Login</h1>
-    <div
-      v-if="error != ''"
-      class="alert alert-danger alert-dismissible fade show"
-    >
+    <div v-if="error != ''" class="alert alert-danger alert-dismissible fade show">
       <strong>{{ error }}</strong>
     </div>
-    <div class="login">
-      <input
-        type="text"
-        v-model="login_name"
-        placeholder="Enter Login"
-        class="form-control"
-      />
-      <input
-        type="password"
-        v-model="pass_word"
-        placeholder="Enter Password"
-        class="form-control"
-      />
-      <button class="js-new" v-on:click="login" >Login!</button>
-      <p>
-        <router-link to="/">Home</router-link>
-      </p>
-    </div>
+    <form class="was-validated" @submit.prevent="login">
+      <div class="login">
+        <input type="text" v-model="login_name" placeholder="Enter Login" class="form-control" required />
+        <div class="invalid-feedback">
+          Please enter the login.
+        </div>
+        <input type="password" v-model="pass_word" placeholder="Enter Password" class="form-control" required />
+        <div class="invalid-feedback">
+          Please enter the password.
+        </div>
+        <!--  <button type="submit" class="js-new" v-on:click="login" >Login!</button> -->
+        <button type="submit" class="js-new">Login!</button>
+        <p>
+          <router-link to="/">Home</router-link>
+        </p>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -40,38 +36,62 @@ export default {
       error: "",
     };
   },
- mounted(){
-  $(document).keypress(function(e) {
-    if(e.which === 13) {
+  mounted() {
+    $(document).keypress(function (e) {
+      if (e.which === 13) {
         // enter has been pressed, execute a click on .js-new:
         $(".js-new").first().click();
-    }
-});
- },
+      }
+    });
+  },
   methods: {
     async login() {
       try {
-            let result = await axios.post(urlacc.getLoginUrl(), {
-            login_name: this.login_name,
-            pass_word: this.pass_word,
+        let result = await axios.post(urlacc.getLoginUrl(), {
+          login_name: this.login_name,
+          pass_word: this.pass_word,
         });
-        if (result.status == 200) {
-          const resp = result.data;
-          localStorage.setItem(
-            "token",
-            "hdsfhqishiofhiqsdhfhdksqhfklmqjdmsfjildjsfioj7467d687dfsgnjklfhnglk46396fdgnlkjndflkg646346drg,fkldjg"
-          );
-          if (resp == 1) {
-            localStorage.setItem("useraccount", "admin");
-            this.$router.push({ name: "admin" });
-          } else {
-            localStorage.setItem("useraccount", "user");            
-            this.$router.push({ name: "user" });
-          }
-        } else {
-          alert("res " + result.status);
-          this.error = "Login failed";
+        alert("res: " + result.status);
+        console.log("result: " + result.status + "nnn" + result.message);
+        switch (result.status) {
+          case 200:
+            const resp = result.data;
+            localStorage.setItem(
+              "token",
+              "hdsfhqishiofhiqsdhfhdksqhfklmqjdmsfjildjsfioj7467d687dfsgnjklfhnglk46396fdgnlkjndflkg646346drg,fkldjg"
+            );
+            if (resp == 1) {
+              localStorage.setItem("useraccount", "admin");
+              this.$router.push({ name: "admin" });
+            } else {
+              localStorage.setItem("useraccount", "user");
+              this.$router.push({ name: "user" });
+            };
+            break;
+          case 203:
+            this.error = result.data;
+            break;
+          default:
+            this.error = "Database error! Status: " + result.status + " Error: " + result.data;
+            break;
         }
+        /* if (result.status == 200) {
+           const resp = result.data;
+           localStorage.setItem(
+             "token",
+             "hdsfhqishiofhiqsdhfhdksqhfklmqjdmsfjildjsfioj7467d687dfsgnjklfhnglk46396fdgnlkjndflkg646346drg,fkldjg"
+           );
+           if (resp == 1) {
+             localStorage.setItem("useraccount", "admin");
+             this.$router.push({ name: "admin" });
+           } else {
+             localStorage.setItem("useraccount", "user");            
+             this.$router.push({ name: "user" });
+           }
+         } else {
+          // alert("Login failed "+ result.data);
+           this.error = result.data;
+         }*/
       } catch (err) {
         console.log("err" + err);
         this.error = err;

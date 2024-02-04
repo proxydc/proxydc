@@ -4,14 +4,21 @@ const queries = require('./queries')
 const getAuthentification = (req, res) => {
     const { login_name, pass_word } = req.body;
     pool.query(queries.getAuthentification, [login_name, pass_word], (error, results) => {
-        if (error) throw error;
-        const noAccountFound = !results.rows.length;
-        if (noAccountFound) {
-            throw("Login failed");
+        try {
+            if (error) {
+                throw error;
+            }
+            const noAccountFound = !results.rows.length;
+            console.log("acc: " + noAccountFound);
+            if (!noAccountFound) {
+                res.status(200).json(results.rows[0]["role_id"]);
+            }
+            res.status(203).json("Login failed"); 
         }
-        else {
-            res.status(200).json(results.rows[0]["role_id"]);
-        }
+        catch (err) {
+            console.log("catch: " + err);
+            res.status(204).json("Error Database");
+         }
     });
 };
 
