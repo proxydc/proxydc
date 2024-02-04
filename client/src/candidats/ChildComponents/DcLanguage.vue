@@ -34,13 +34,7 @@ function saveData() {
       <h5>Langues</h5>
       <div id="langs">
         <div class="col" v-for="(language, index) in languages" :key="language">
-          <input
-            class="form-control dc-vlist"
-            list="languages"
-            type="text"
-            :value="language"
-            :key="index"
-          />
+          <input class="form-control dc-vlist" list="languages" type="text" :value="language" :key="index" />
         </div>
       </div>
     </div>
@@ -53,11 +47,7 @@ function saveData() {
     </datalist>
     <div class="row">
       <div class="col text-center">
-        <button
-          type="button"
-          class="btn btn-outline-info btn-sm"
-          @click="addRow"
-        >
+        <button type="button" class="btn btn-outline-info btn-sm" @click="addRow">
           Ajouter une langue
         </button>
       </div>

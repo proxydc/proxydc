@@ -4,23 +4,28 @@
     <div v-if="error != ''" class="alert alert-danger alert-dismissible fade show">
       <strong>{{ error }}</strong>
     </div>
-    <form class="was-validated" @submit.prevent="login">
-      <div class="login">
-        <input type="text" v-model="login_name" placeholder="Enter Login" class="form-control" required />
-        <div class="invalid-feedback">
+    <div class="container w-50 p-3 my-1 bg-light border border-success">
+      <form class="was-validated" @submit.prevent="login">
+        <div class="login">
+          <label for="lblogin">Login</label>
+          <input type="text" id="lblogin" v-model="login_name" placeholder="Enter Login" class="form-control" required />
+          <!--  <div class="invalid-feedback">
           Please enter the login.
-        </div>
-        <input type="password" v-model="pass_word" placeholder="Enter Password" class="form-control" required />
-        <div class="invalid-feedback">
+        </div>-->
+          <label for="lbpw">Password</label>
+          <input type="password" id="lbpw" v-model="pass_word" placeholder="Enter Password" class="form-control"
+            required />
+          <!--   <div class="invalid-feedback">
           Please enter the password.
-        </div>
-        <!--  <button type="submit" class="js-new" v-on:click="login" >Login!</button> -->
-        <button type="submit" class="js-new">Login!</button>
-        <p>
+        </div>-->
+          <!--  <button type="submit" class="js-new" v-on:click="login" >Login!</button> -->
+          <button type="submit" class="js-new">Login!</button>
+          <!-- <p>
           <router-link to="/">Home</router-link>
-        </p>
-      </div>
-    </form>
+        </p>-->
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 

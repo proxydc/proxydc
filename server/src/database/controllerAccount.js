@@ -13,12 +13,14 @@ const getAuthentification = (req, res) => {
             if (!noAccountFound) {
                 res.status(200).json(results.rows[0]["role_id"]);
             }
-            res.status(203).json("Login failed"); 
+            else {
+                res.status(203).json("Login failed");
+            }
         }
         catch (err) {
             console.log("catch: " + err);
             res.status(204).json("Error Database");
-         }
+        }
     });
 };
 

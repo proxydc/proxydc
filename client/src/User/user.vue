@@ -5,7 +5,7 @@
         Nouveau candidat
       </button>
     </div>
-    <div class="container p-3 my-5 bg-light border border-primary">
+    <div class="container p-3 my-2 bg-light border border-primary">
       <table id="usertable" class="table table-striped" style="width:100%">
         <thead>
           <tr>

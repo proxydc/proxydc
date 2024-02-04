@@ -2,54 +2,31 @@
   <div>
     <h1>Edit Candidat</h1>
     <h2>{{ errorlst }}</h2>
-    <div class="register">
-      <label for="lbfamilyname">Nom</label>
-      <input
-        type="text"
-        v-model="model.candidat.familyname"
-        class="form-control"
-        id="lbfamilyname"
-        disabled
-      />
-      <label for="lbfirstname">Prénom</label>
-      <input
-        type="text"
-        id="lbfirstname"
-        v-model="model.candidat.firstname"
-        placeholder="Enter First Name"
-        class="form-control"
-      />
-      <label for="lbemail">Email</label>
-      <input
-        type="email"
-        v-model="model.candidat.email"
-        placeholder="Enter Email"
-        id="lbemail"
-        class="form-control"
-      />
-      <label for="lbtags">Tags</label>
-      <input
-        type="text"
-        id="lbtags"
-        v-model="model.candidat.tags"
-        placeholder="Enter tags"
-        class="form-control"
-      />
-      <label for="lbstatus">Status:</label>
-      <div style="overflow:hidden;">
-      <select class="selectpicker show-tick" 
-        v-model="model.candidat.dc_status"
-        id="lbstatus">
-        <option v-bind:value="1">Initialisé</option>
-        <option v-bind:value="2">Saisie Encours</option>
-        <option v-bind:value="3">Finalisé</option>
-        <option v-bind:value="4">Terminé</option>
-      </select>
-    </div>
-    <br/>
-      <div style="overflow:hidden;">
-        <button v-on:click="updateCandidat">Update Candidat</button>
-        <br/><br/>
+    <div class="container w-50 p-3 my-1 bg-light border border-info">
+      <div class="register">
+        <label for="lbfamilyname">Nom</label>
+        <input type="text" v-model="model.candidat.familyname" class="form-control" id="lbfamilyname" disabled />
+        <label for="lbfirstname">Prénom</label>
+        <input type="text" id="lbfirstname" v-model="model.candidat.firstname" placeholder="Enter First Name"
+          class="form-control" />
+        <label for="lbemail">Email</label>
+        <input type="email" v-model="model.candidat.email" placeholder="Enter Email" id="lbemail" class="form-control" />
+        <label for="lbtags">Tags</label>
+        <input type="text" id="lbtags" v-model="model.candidat.tags" placeholder="Enter tags" class="form-control" />
+        <label for="lbstatus">Status:</label>
+        <div style="overflow:hidden;">
+          <select class="selectpicker show-tick" v-model="model.candidat.dc_status" id="lbstatus">
+            <option v-bind:value="1">Initialisé</option>
+            <option v-bind:value="2">Saisie Encours</option>
+            <option v-bind:value="3">Finalisé</option>
+            <option v-bind:value="4">Terminé</option>
+          </select>
+        </div>
+        <br />
+        <div style="overflow:hidden;">
+          <button v-on:click="updateCandidat">Update Candidat</button>
+          <br /><br />
+        </div>
       </div>
     </div>
   </div>
@@ -122,5 +99,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

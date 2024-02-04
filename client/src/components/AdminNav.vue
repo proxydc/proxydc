@@ -18,15 +18,15 @@
           </li>
 
         </ul>
-      <!--  <div class="nav justify-content-end">
+        <!--  <div class="nav justify-content-end">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">Se déconnecter</a>
           </li>
         </div>
          class="btn btn-outline-success btn-sm" -->
-            <div class="nav justify-content-end">
-              <a class="nav-link" aria-current="page" href="/">Se déconnecter</a>
-            </div> 
+        <div class="nav justify-content-end">
+          <a class="nav-link" aria-current="page" href="/">Se déconnecter</a>
+        </div>
       </div>
     </nav>
   </div>

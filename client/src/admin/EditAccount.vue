@@ -2,25 +2,29 @@
   <div>
     <h1>Edit Account</h1>
     <h2>{{ errorlst }}</h2>
-    <div class="register"> 
-      <label for="lblogin">Login Name</label> 
-      <input type="text" v-model="model.account.login_name" class="form-control" id="lblogin" disabled >
-      <label for="lbdisplay">Display Name</label>     
-      <input type="text" id="lbdisplay" v-model="model.account.display_name" placeholder="Enter Display Name" class="form-control" />
-      <label for="lbpassword">Password</label>
-      <input type="password" v-model="model.account.pass_word" placeholder="Enter Password" id="lbpassword" class="form-control" />
-      <div class="example ex1">
-        <h5>Select Role</h5>
-        <label class="radio red">
-          <input type="radio" v-model="model.account.role_id" value="1" name="group1" />
-          <span>Admin</span>
-        </label>
-        <label class="radio blue">
-          <input type="radio" v-model="model.account.role_id" value="2" name="group1" />
-          <span>User</span>
-        </label>
+    <div class="container w-50 p-3 my-1 bg-light border border-info">
+      <div class="register">
+        <label for="lblogin">Login Name</label>
+        <input type="text" v-model="model.account.login_name" class="form-control" id="lblogin" disabled>
+        <label for="lbdisplay">Display Name</label>
+        <input type="text" id="lbdisplay" v-model="model.account.display_name" placeholder="Enter Display Name"
+          class="form-control" />
+        <label for="lbpassword">Password</label>
+        <input type="password" v-model="model.account.pass_word" placeholder="Enter Password" id="lbpassword"
+          class="form-control" />
+        <div class="example ex1">
+          <h5>Select Role</h5>
+          <label class="radio red">
+            <input type="radio" v-model="model.account.role_id" value="1" name="group1" />
+            <span>Admin</span>
+          </label>
+          <label class="radio blue">
+            <input type="radio" v-model="model.account.role_id" value="2" name="group1" />
+            <span>User</span>
+          </label>
+        </div>
+        <button v-on:click="updateAccount">Update Account</button>
       </div>
-      <button v-on:click="updateAccount">Update Account</button>
     </div>
   </div>
 </template>
@@ -90,7 +94,6 @@ export default {
 </script>
 
 <style scoped>
-
 .example {
   margin: 20px;
 }
@@ -132,6 +135,7 @@ export default {
   background-color: #fff;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.1);
 }
+
 .ex1 .red input:checked+span {
   color: red;
   border-color: red;

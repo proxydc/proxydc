@@ -1,25 +1,30 @@
-<template> 
+<template>
   <div>
     <h1>Add Account</h1>
-    <div class="register">
-      <label for="lblogin">Login Name</label> 
-      <input type="text" v-model="model.account.login_name" placeholder="Enter Login Name" id="lblogin"  class="form-control"/>
-      <label for="lbdisplay">Display Name</label>     
-      <input type="text" v-model="model.account.display_name" placeholder="Enter Display Name" id="lbdisplay" class="form-control" />
-      <label for="lbpassword">Password</label>
-      <input type="password" v-model="model.account.pass_word" placeholder="Enter Password" id="lbpassword" class="form-control" />
-      <div class="example ex1">
-        <h5>Select Role</h5>
-        <label class="radio red">
-          <input type="radio" v-model="model.account.role_id" value="1" name="group1" />
-          <span>Admin</span>
-        </label>
-        <label class="radio blue">
-          <input type="radio" v-model="model.account.role_id" value="2" name="group1" />
-          <span>User</span>
-        </label>
+    <div class="container w-50 p-3 my-1 bg-light border border-info">
+      <div class="register">
+        <label for="lblogin">Login Name</label>
+        <input type="text" v-model="model.account.login_name" placeholder="Enter Login Name" id="lblogin"
+          class="form-control" />
+        <label for="lbdisplay">Display Name</label>
+        <input type="text" v-model="model.account.display_name" placeholder="Enter Display Name" id="lbdisplay"
+          class="form-control" />
+        <label for="lbpassword">Password</label>
+        <input type="password" v-model="model.account.pass_word" placeholder="Enter Password" id="lbpassword"
+          class="form-control" />
+        <div class="example ex1">
+          <h5>Select Role</h5>
+          <label class="radio red">
+            <input type="radio" v-model="model.account.role_id" value="1" name="group1" />
+            <span>Admin</span>
+          </label>
+          <label class="radio blue">
+            <input type="radio" v-model="model.account.role_id" value="2" name="group1" />
+            <span>User</span>
+          </label>
+        </div>
+        <button v-on:click="addAccount">Add Account</button>
       </div>
-      <button v-on:click="addAccount">Add Account</button>
     </div>
   </div>
 </template>
@@ -45,24 +50,24 @@ export default {
   },
   methods: {
     async addAccount() {
-      try{
-      const url = urlacc.getAddAccUrl();//"http://localhost:3000/api/v1/database/account/add";
-      alert("url" + url + " login: " + this.model.account.login_name + " displayname: " + this.model.account.display_name + " role_id: " + this.model.account.role_id);
-      let result = await axios.post(url, {
-        login_name: this.model.account.login_name,
-        display_name: this.model.account.display_name,
-        pass_word: this.model.account.pass_word,
-        role_id: this.model.account.role_id,
-      });
-      console.warn(result);
-      if (result.status == 201) {
-        localStorage.setItem("user-info", JSON.stringify(result.data))
-        this.$router.push({ name: 'admin' })
+      try {
+        const url = urlacc.getAddAccUrl();//"http://localhost:3000/api/v1/database/account/add";
+        alert("url" + url + " login: " + this.model.account.login_name + " displayname: " + this.model.account.display_name + " role_id: " + this.model.account.role_id);
+        let result = await axios.post(url, {
+          login_name: this.model.account.login_name,
+          display_name: this.model.account.display_name,
+          pass_word: this.model.account.pass_word,
+          role_id: this.model.account.role_id,
+        });
+        console.warn(result);
+        if (result.status == 201) {
+          localStorage.setItem("user-info", JSON.stringify(result.data))
+          this.$router.push({ name: 'admin' })
+        }
       }
-    }
-    catch(err) {
+      catch (err) {
         this.errlst = err.errors
-    }
+      }
     },
   },
 };
@@ -136,4 +141,5 @@ export default {
 
 .ex1 .orange input:checked+span:before {
   background-color: orange;
-}</style>
+}
+</style>

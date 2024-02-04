@@ -110,10 +110,10 @@ const xpAddedCounter = ref(0);
             <div class="col dc-tasklist-perso">
               <label for="">Tâches</label>
               <div class="dc-taskinputlist-perso">
-              <input class="form-control dc-vlist" type="text" placeholder="" aria-label="" />
-              <input class="form-control dc-vlist" type="text" placeholder="" aria-label="" />
-              <input class="form-control dc-vlist" type="text" placeholder="" aria-label="" />
-              <input class="form-control dc-vlist" type="text" placeholder="" aria-label="" />
+                <input class="form-control dc-vlist" type="text" placeholder="" aria-label="" />
+                <input class="form-control dc-vlist" type="text" placeholder="" aria-label="" />
+                <input class="form-control dc-vlist" type="text" placeholder="" aria-label="" />
+                <input class="form-control dc-vlist" type="text" placeholder="" aria-label="" />
               </div>
               <button class="btn btn-outline-primary btn-sm dc-taskbutton-perso">
                 Ajouter une ligne
