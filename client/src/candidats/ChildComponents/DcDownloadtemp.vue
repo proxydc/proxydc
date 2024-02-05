@@ -72,6 +72,7 @@ export default {
             phone: "0652455478",
             description: "New Website",
           }*/);
+         // doc.addsection(new section)
 
           const blob = doc.getZip().generate({
             type: "blob",

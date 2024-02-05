@@ -133,7 +133,7 @@ class DocData {
           heading: HeadingLevel.TITLE,
           bold: true,
           underline: true,
-          weight: 18,
+          size: 30,
           color: '#008cba',
         }),
       ],

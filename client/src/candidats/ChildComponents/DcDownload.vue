@@ -17,11 +17,14 @@ import {
   TabStopPosition,
   TabStopType,
   TextRun,
+  ImageRun,
 } from "docx";
 import docData from "./DocData.js";
 const FileSaver = require("file-saver");
 import urldc from "../../_helpers/urllist.js";
 import axios from "axios";
+//import * as fs from 'fs';
+const fs = require('fs');
 export default {
   data() {
     return {
@@ -57,50 +60,67 @@ export default {
       var firstname = this.dbDoc.document.firstname;
       var lastname = "Doe";
       var message = "I just created a document using Vue.js 😲";
-      // Create a new Document an save it in a variable${this.form[0].familyname}
-      /*let doc = new Document({
-        sections: []});*/
-      let doc = new Document({
-        sections: [
-          {
-            headers: {
-              default: docData.getHeader(docjs.familyname, docjs.firstname),
+      const image = new ImageRun({
+        type: 'png',
+       /* data: fs.readFile(new URL('https://raw.githubusercontent.com/proxydc/Templates/main/HLine.png'), 'utf8', function (err, data) {
+          if (err) {
+            console.log(err);
+          } else {
+            return data;
+          }}),*/
+          data:fs.readFileSync(new URL("https://raw.githubusercontent.com/proxydc/Templates/main/HLine.png"), 'utf8'),
+          transformation: {
+            width: 100,
+              height: 100,
+        },
+        });
+        // Create a new Document an save it in a variable${this.form[0].familyname}
+        /*let doc = new Document({
+          sections: []});*/
+        let doc = new Document({
+          sections: [
+            {
+              headers: {
+                default: docData.getHeader(docjs.familyname, docjs.firstname),
+              },
+              properties: {},
+              children: [
+                docData.getTitle(),
+                docData.LineBreak(),
+                docData.getLine("Nom:     ", docjs.familyname),
+                docData.getLineBreak(),
+                docData.getLine("Prénom: ", docjs.firstname),
+                docData.getLineBreak(),
+                docData.getLine("Email:   ", docjs.email),
+                docData.LineBreak(),
+                docData.getSubTitle("Compétences fonctionnelles"),
+                new Paragraph({
+                  children: [image],
+                }),
+                docData.getComp(docjs.functionalAbilities),
+                docData.LineBreak(),
+                docData.getSubTitle("Compétences techniques"),
+                docData.getComp(docjs.technicalAbilities),
+                docData.LineBreak(),
+                docData.getSubTitle("Diplômes / Certifications"),
+                docData.LineBreak(),
+                docData.getCerts(docjs.certifications),
+
+              ],
             },
-            properties: {},
-            children: [
-              docData.getTitle(),
-              docData.LineBreak(),
-              docData.getLine("Nom:     ", docjs.familyname),
-              docData.getLineBreak(),
-              docData.getLine("Prénom: ", docjs.firstname),
-              docData.getLineBreak(),
-              docData.getLine("Email:   ", docjs.email),
-              docData.LineBreak(),
-              docData.getSubTitle("Compétences fonctionnelles"), 
-              docData.getComp(docjs.functionalAbilities),
-              docData.LineBreak(),
-              docData.getSubTitle("Compétences techniques"), 
-              docData.getComp(docjs.technicalAbilities),
-              docData.LineBreak(),
-              docData.getSubTitle("Diplômes / Certifications"),
-              docData.LineBreak(),
-              docData.getCerts(docjs.certifications),
-             
-            ],
-          },
-        ],
-      });
-      // To export into a .docx file
-      this.saveDocumentToFile(doc, `vuedoc.docx`);
-    },
-    saveDocumentToFile(doc, fileName) {
-      const mimeType =
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-      Packer.toBlob(doc).then((blob) => {
-        const docblob = blob.slice(0, blob.size, mimeType);
-        FileSaver.saveAs(docblob, fileName);
-      });
-    },
+          ],
+        });
+        // To export into a .docx file
+        this.saveDocumentToFile(doc, `vuedoc.docx`);
+      },
+        saveDocumentToFile(doc, fileName) {
+        const mimeType =
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+        Packer.toBlob(doc).then((blob) => {
+          const docblob = blob.slice(0, blob.size, mimeType);
+          FileSaver.saveAs(docblob, fileName);
+        });
+      },
   },
-};
+  };
 </script>

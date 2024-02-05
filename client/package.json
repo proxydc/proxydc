@@ -28,7 +28,8 @@
     "strip-ansi": "^7.1.0",
     "url": "^0.11.3",
     "vue": "^3.2.13",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "wcwidth": "^1.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
