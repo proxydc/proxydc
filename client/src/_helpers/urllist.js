@@ -13,7 +13,11 @@ class urllist {
         return baseURL + "dc";
     }   
     static getDcUrl(id) {
-        return baseURL + "dc/" + id;
+        const acc= localStorage.getItem("useraccount");
+        if(acc=="user"|| acc=="admin")
+            return baseURL + "dc/" + id;
+        else
+            return baseURL + "dc/candidat/" + id;
     }
     static getDcDocUrl(id) {
         return baseURL + "dc/doc/" + id;

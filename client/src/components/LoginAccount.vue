@@ -56,7 +56,6 @@ export default {
           login_name: this.login_name,
           pass_word: this.pass_word,
         });
-        alert("res: " + result.status);
         console.log("result: " + result.status + "nnn" + result.message);
         switch (result.status) {
           case 200:
@@ -80,23 +79,6 @@ export default {
             this.error = "Database error! Status: " + result.status + " Error: " + result.data;
             break;
         }
-        /* if (result.status == 200) {
-           const resp = result.data;
-           localStorage.setItem(
-             "token",
-             "hdsfhqishiofhiqsdhfhdksqhfklmqjdmsfjildjsfioj7467d687dfsgnjklfhnglk46396fdgnlkjndflkg646346drg,fkldjg"
-           );
-           if (resp == 1) {
-             localStorage.setItem("useraccount", "admin");
-             this.$router.push({ name: "admin" });
-           } else {
-             localStorage.setItem("useraccount", "user");            
-             this.$router.push({ name: "user" });
-           }
-         } else {
-          // alert("Login failed "+ result.data);
-           this.error = result.data;
-         }*/
       } catch (err) {
         console.log("err" + err);
         this.error = err;

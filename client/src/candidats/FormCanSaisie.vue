@@ -217,7 +217,12 @@ export default {
         const url = urldc.getDcUrl(id);
         axios.get(url).then((res) => {
           console.log(res.data);
-          this.form = res.data;
+          if(res.status==200)
+          {this.form = res.data;}
+          if(res.status==201)
+          {
+            this.$router.push({ name: 'NotFound' })
+          }
         });
       } catch (err) {
         this.errormsg = err;

@@ -19,11 +19,11 @@
         </thead>
         <tbody class="table-group-divider">
           <tr v-for="(acRow, index) in this.AcRows" :key="index">
-            <td>{{ acRow.familyname }}</td>
-            <td>{{ acRow.firstname }}</td>
-            <td>{{ acRow.email }}</td>
-            <td>{{ acRow.status_name }}</td>
-            <td>{{ acRow.tags }}</td>
+            <td class="text-start">{{ acRow.familyname }}</td>
+            <td class="text-start">{{ acRow.firstname }}</td>
+            <td class="text-start">{{ acRow.email }}</td>
+            <td class="text-start">{{ acRow.status_name }}</td>
+            <td class="text-start">{{ acRow.tags }}</td>
             <td>
               <a class="btn btn-success mx-2" :href="'/editDC/' + acRow.id">
                 Edit

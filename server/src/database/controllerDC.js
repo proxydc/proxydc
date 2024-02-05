@@ -19,6 +19,21 @@ const getDCById = (req, res) => {
         res.status(200).json(results.rows);
     });
 };
+const getDCByIdCandidat = (req, res) => {
+    try {
+        const id = req.params.id;
+        pool.query(queries.getDCById, [id], (error, results) => {
+            if (error) throw error;
+            if(results.rows[0].dc_status==1 && results.rows[0].dc_status==2)
+                {res.status(200).json(results.rows);}
+            else{res.status(201).json("Access denied!")}
+        });
+    }
+    catch (err) {
+        console.log("catch: " + err);
+        res.status(204).json("Error Database");
+    }
+};
 const getDCDocById = (req, res) => {
     const id = req.params.id;
     pool.query(queries.getDCDocById, [id], (error, results) => {
@@ -106,6 +121,7 @@ const getAllDcStatus = (req, res) => {
 module.exports = {
     getDCs,
     getDCById,
+    getDCByIdCandidat,
     getDCDocById,
     addDC,
     updateDCDoc,

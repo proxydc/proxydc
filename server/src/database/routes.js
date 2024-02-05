@@ -13,6 +13,7 @@ router.delete("/account/:id", controller.deleteAccountById);
 router.get("/dc", controllerDC.getDCs);
 router.post("/dc/add", controllerDC.addDC);
 router.get("/dc/:id", controllerDC.getDCById);
+router.get("/dc/candidat/:id", controllerDC.getDCByIdCandidat);
 router.get("/dc/doc/:id", controllerDC.getDCDocById);
 router.put("/dc/:id", controllerDC.updateDCDoc);
 router.put("/dcAdmin/:id", controllerDC.updateDCByAdmin);

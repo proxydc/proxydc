@@ -1,6 +1,11 @@
 <template>
   <div>
-    <div class="container p-3 my-5 bg-light border border-primary">
+    <div class="d-flex gap-2 py-3">
+      <button type="button" class="btn btn-outline-primary" @click="openAddAccount()">
+        Nouveau account
+      </button>
+    </div>
+    <div class="container p-3 my-2 bg-light border border-primary">
       <div class="row">
         <div class="col">
           <table id="admintable" class="table table-striped" style="width:100%">
@@ -16,10 +21,10 @@
             <tbody class="table-group-divider">
               <tr v-for="(acRow, index) in this.AcRows" :key="index">
                 <th scope="row">{{ acRow.id }}</th>
-                <td>{{ acRow.login_name }}</td>
-                <td>{{ acRow.display_name }}</td>
-                <td>{{ acRow.role_name}}</td>
-                <td>
+                <td class="text-start">{{ acRow.login_name }}</td>
+                <td class="text-start">{{ acRow.display_name }}</td>
+                <td class="text-start">{{ acRow.role_name}}</td>
+                <td class="text-start">
                   <a class="btn btn-success mx-2" :href="'/editAccount/' + acRow.id">
                     Edit
                   </a>
@@ -70,11 +75,14 @@ export default {
       });
             });
         },
+        openAddAccount() {
+      this.$router.push({ name: "AddAccount" });
+    },
         deleteAccount(accountId) {
             //alert("account: " + accountId);
             if (confirm('Are you sure, you want to delete this account. Account Id: ' + accountId)) {
                 const url = urlacc.getEditDelAccUrl(accountId);// `http://localhost:3000/api/v1/database/account/${accountId}`;
-                alert("url: " + url);
+                //alert("url: " + url);
                 axios.delete(url).then(res => {
                     console.log(res.data);
                     this.getLogins();

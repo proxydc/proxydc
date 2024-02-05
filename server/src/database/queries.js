@@ -10,6 +10,7 @@ const getAuthentification = "select * from account a where a.login_name = $1 and
 //queries reg DCS
 const getDCs = "select d.*, ds.label as status_name from dc d, dc_status ds where d.dc_status = ds.id";
 const getDCById = "select d.*, ds.label as status_name from dc d, dc_status ds where d.id = $1 and d.dc_status = ds.id";
+const getDCByIdCandidat = "select d.*, ds.label as status_name from dc d, dc_status ds where d.id = $1 and d.dc_status = ds.id";
 const getDCDocById = "select dc.document from dc where id = $1 limit 1";
 const checkDCExists = "select a from dc a where a.email = $1";
 const addDC = "insert into dc(familyname, firstname, email, dc_status, document) values ($1, $2, $3, $4, $5)";// add tags ici
@@ -31,6 +32,7 @@ module.exports = {
     
     getDCs,
     getDCById,
+    getDCByIdCandidat,
     getDCDocById,
     checkDCExists,
     addDC,
