@@ -124,7 +124,7 @@ class DocData {
       ],
     });
   }
-  static getTitleComp(txt) {
+  static getSubTitle(txt) {
     return new Paragraph({
       children: [
         new TextRun({
@@ -169,6 +169,26 @@ class DocData {
       });
     });
   }
+  static getCerts(funcs) {
+    const cf = new Paragraph({
+      children: [],
+    });
+    alert(funcs.length);
+    for (var i = 0; i < funcs.length; i++) {
+      cf.addChildElement(new TextRun({
+        text:funcs[i].year, 
+      }));
+      cf.addChildElement( new TextRun({
+        children: [new Tab(), funcs[i].title],
+        bold: true,
+      }));
+      cf.addChildElement( new TextRun({
+        text: "",
+        break: 1,
+      }));
+    }
+    return cf;
+  } 
   /*  new Paragraph({
            /* tabStops: [
                 {
