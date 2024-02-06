@@ -18,13 +18,15 @@ import {
   TabStopType,
   TextRun,
   ImageRun,
+  Footer,
+  addParagraph,
 } from "docx";
 import docData from "./DocData.js";
 const FileSaver = require("file-saver");
 import urldc from "../../_helpers/urllist.js";
 import axios from "axios";
 //import * as fs from 'fs';
-const fs = require('fs');
+const fs = require("fs");
 export default {
   data() {
     return {
@@ -56,71 +58,148 @@ export default {
       }
       console.log("docdata: " + this.dbDoc);
       let docjs = this.dbDoc.document;
-      alert("iam here" + this.dbDoc.document.email);
-      var firstname = this.dbDoc.document.firstname;
-      var lastname = "Doe";
-      var message = "I just created a document using Vue.js 😲";
-      const image = new ImageRun({
-        type: 'png',
-       /* data: fs.readFile(new URL('https://raw.githubusercontent.com/proxydc/Templates/main/HLine.png'), 'utf8', function (err, data) {
-          if (err) {
-            console.log(err);
-          } else {
-            return data;
-          }}),*/
-          data:fs.readFileSync(new URL("https://raw.githubusercontent.com/proxydc/Templates/main/HLine.png"), 'utf8'),
-          transformation: {
-            width: 100,
-              height: 100,
-        },
-        });
-        // Create a new Document an save it in a variable${this.form[0].familyname}
-        /*let doc = new Document({
+      // Create a new Document an save it in a variable${this.form[0].familyname}
+      /*let doc = new Document({
           sections: []});*/
-        let doc = new Document({
-          sections: [
-            {
-              headers: {
-                default: docData.getHeader(docjs.familyname, docjs.firstname),
-              },
-              properties: {},
-              children: [
-                docData.getTitle(),
-                docData.LineBreak(),
-                docData.getLine("Nom:     ", docjs.familyname),
-                docData.getLineBreak(),
-                docData.getLine("Prénom: ", docjs.firstname),
-                docData.getLineBreak(),
-                docData.getLine("Email:   ", docjs.email),
-                docData.LineBreak(),
-                docData.getSubTitle("Compétences fonctionnelles"),
-                new Paragraph({
-                  children: [image],
-                }),
-                docData.getComp(docjs.functionalAbilities),
-                docData.LineBreak(),
-                docData.getSubTitle("Compétences techniques"),
-                docData.getComp(docjs.technicalAbilities),
-                docData.LineBreak(),
-                docData.getSubTitle("Diplômes / Certifications"),
-                docData.LineBreak(),
-                docData.getCerts(docjs.certifications),
-
-              ],
+      const doc = new Document({
+        sections: [
+          {
+            properties: {
+              titlePage: true,
             },
-          ],
-        });
-        // To export into a .docx file
-        this.saveDocumentToFile(doc, `vuedoc.docx`);
-      },
-        saveDocumentToFile(doc, fileName) {
-        const mimeType =
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-        Packer.toBlob(doc).then((blob) => {
-          const docblob = blob.slice(0, blob.size, mimeType);
-          FileSaver.saveAs(docblob, fileName);
-        });
-      },
+            headers: {
+              first: new Header({
+                // The header on first page when the 'Different First Page' option is activated
+                children: [
+                  docData.getHeader(docjs.familyname, docjs.firstname),
+                  docData.getBufferLogo1stPage(),
+                  docData.getBufferLogo(),
+                ],
+              }),
+              default: new Header({
+                // The standard default header on every page or header on odd pages when the 'Different Odd & Even Pages' option is activated
+                children: [
+                  docData.getHeader(docjs.familyname, docjs.firstname),
+                  docData.getBufferLogo1stPage(),
+                ],
+              }),
+              /* even: new Header({ // The header on even pages when the 'Different Odd & Even Pages' option is activated
+                children: [],
+            }),*/
+            },
+            footers: {
+              default: new Footer({
+                // The standard default footer on every page or footer on odd pages when the 'Different Odd & Even Pages' option is activated
+                children: [
+                  docData.getFooterC(docjs.familyname, docjs.firstname),
+                  docData.getFooterL(),
+                  docData.getPageNumber(),
+                ],
+              }),
+              first: new Footer({
+                // The footer on first page when the 'Different First Page' option is activated
+                children: [
+                  docData.getFooterC(docjs.familyname, docjs.firstname),
+                  docData.getFooterL(),
+                  docData.getFooterR(),
+                  docData.getPageNumber(),
+                ],
+              }),
+              /* even: new Footer({ // The footer on even pages when the 'Different Odd & Even Pages' option is activated
+                children: [],
+            }),*/
+            },
+            children: [
+              docData.getTitle(),
+              docData.LineBreak(),
+              docData.getLine("Nom:     ", docjs.familyname),
+              docData.getLineBreak(),
+              docData.getLine("Prénom: ", docjs.firstname),
+              docData.getLineBreak(),
+              docData.getLine("Email:   ", docjs.email),
+              docData.LineBreak(),
+              docData.getSubTitle("Compétences fonctionnelles"),
+              docData.getComp(docjs.functionalAbilities),
+              docData.getHL(),
+              docData.LineBreak(),
+              docData.getSubTitle("Compétences techniques"),
+              docData.getComp(docjs.technicalAbilities),
+              docData.getHL(),
+              docData.LineBreak(),
+              docData.getSubTitle("Diplômes / Certifications"),
+              docData.LineBreak(),
+              docData.getCerts(docjs.certifications),
+              docData.getHL(),
+              docData.getSubTitle("Langues"),
+              //docData.LineBreak(),
+              docData.getLangues(docjs.languages),
+              docData.getHL(),
+
+              /* docData.getSubTitle("Expériences professionnelles"),
+                docData.LineBreak(),
+                docData.getLangues(docjs.experiences),
+                docData.getHL(),
+
+                docData.getSubTitle("Expériences personnelles"),
+                docData.LineBreak(),
+                docData.getLangues(docjs.projects),
+                docData.getHL(),*/
+
+              docData.getSubTitle("Environnement"),
+              docData.LineBreak(),
+              docData.getLine2(docjs.skills.environments),
+              docData.getHL(),
+
+              docData.getSubTitle("Languages"),
+              docData.LineBreak(),
+              docData.getLine2(docjs.skills.languages),
+              docData.getHL(),
+
+              docData.getSubTitle("SGBD"),
+              docData.LineBreak(),
+              docData.getLine2(docjs.skills.databases),
+              docData.getHL(),
+
+              docData.getSubTitle("Outils"),
+              docData.LineBreak(),
+              docData.getLine2(docjs.skills.tools),
+              docData.getHL(),
+
+              docData.getSubTitle("Systèmes"),
+              docData.LineBreak(),
+              docData.getLine2(docjs.skills.systems),
+              docData.getHL(),
+
+              docData.getSubTitle("En bref"),
+              docData.LineBreak(),
+              docData.getLine2(docjs.bref),
+              docData.getHL(),
+            ],
+          },
+        ],
+      });
+      //doc.add(docData.getSubTitle("Outils"));
+      doc.addSection({
+        children: [
+          new Paragraph({
+            children: [
+              new TextRun("New Section added"),
+              new TextRun("Hello New Section"),
+            ],
+          }),
+        ],
+      });
+      // To export into a .docx file
+      this.saveDocumentToFile(doc, `vuedoc.docx`);
+    },
+    saveDocumentToFile(doc, fileName) {
+      const mimeType =
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+      Packer.toBlob(doc).then((blob) => {
+        const docblob = blob.slice(0, blob.size, mimeType);
+        FileSaver.saveAs(docblob, fileName);
+      });
+    },
   },
-  };
+};
 </script>
