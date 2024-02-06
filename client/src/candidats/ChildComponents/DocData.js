@@ -293,7 +293,7 @@ class DocData {
     for (var i = 0; i < langs.length; i++) {
       cf.addChildElement(
         new TextRun({
-          text: langs[i],
+          text: i+1+")  "+ langs[i],
           break: 1,
          //bullet: {level: 0},
         })
