@@ -16,6 +16,7 @@ import {
   ExternalHyperlink,
   PageNumber,
   FrameAnchorType,
+  ShadingType,
 } from "docx";
 import * as fs from "fs";
 class DocData {
@@ -95,6 +96,14 @@ class DocData {
           alignment: AlignmentType.CENTER,
         }),
       ],
+      floating: {
+        horizontalPosition: {
+          align: HorizontalPositionAlign.CENTER,
+        },
+        verticalPosition: {
+          align: VerticalPositionAlign.TOP,
+        },
+      },
     });
   }
 
@@ -149,6 +158,11 @@ class DocData {
         }),
       ],
       alignment: AlignmentType.CENTER,
+      shading: {
+        type: ShadingType.REVERSE_DIAGONAL_STRIPE,
+        color: "00FFFF",
+        fill: "FF0000",
+    },
     });
   }
 
@@ -342,7 +356,7 @@ class DocData {
             verticalPosition: {
               align: VerticalPositionAlign.TOP,
             },
-          },
+          },         
         }),
       ],
     });
@@ -367,7 +381,8 @@ class DocData {
             verticalPosition: {
               align: VerticalPositionAlign.TOP,
             },
-          },
+          },      
+        
         }),
       ],
     });
@@ -492,6 +507,44 @@ class DocData {
       },*/
     });
   }
+
+  static getExpPro(pros) {
+    const cf = new Paragraph({
+      children: [],
+    });
+    for (var i = 0; i < pros.length; i++) {
+      cf.addChildElement(
+        new TextRun({
+          text: i+1+")  "+ pros[i],
+          break: 1,
+         //bullet: {level: 0},
+        })
+      )
+    }
+    return cf;
+  }
+  static getExpPerso(perso) {
+    const cf = new Paragraph({
+      children: [],
+    });
+    for (var i = 0; i < perso.length; i++) {
+      cf.addChildElement(
+        new TextRun({
+          text: i+1+")  "+ perso[i],
+          break: 1,
+         //bullet: {level: 0},
+        })
+      )
+    }
+    return cf;
+  }
+
+
+
+
+
+
+
 }
 
 export default DocData;

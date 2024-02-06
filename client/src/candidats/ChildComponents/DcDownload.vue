@@ -20,6 +20,11 @@ import {
   ImageRun,
   Footer,
   addParagraph,
+  ShadingType,
+  HorizontalPositionAlign,
+  VerticalPositionAlign,
+  TextWrappingType,
+  TextWrappingSide,
 } from "docx";
 import docData from "./DocData.js";
 const FileSaver = require("file-saver");
@@ -70,7 +75,31 @@ export default {
             headers: {
               first: new Header({
                 // The header on first page when the 'Different First Page' option is activated
-                children: [
+                children: [                
+                  new Paragraph({
+                    children: [
+                      new ImageRun({
+                        type: "png",
+                        data: "iVBORw0KGgoAAAANSUhEUgAABAAAAAAFCAYAAADbn54jAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAJcEhZcwAACxEAAAsRAX9kX5EAAAAGYktHRAD+AP4A/usY1IIAAAAJdnBBZwAABAAAAAJAABJgAnEAAAAldEVYdGNyZWF0ZS1kYXRlADIwMTEtMDEtMDNUMTY6MDE6NTYrMDA6MDAJWHqrAAAAJXRFWHRtb2RpZnktZGF0ZQAyMDExLTAxLTAzVDE2OjAxOjU2KzAwOjAwVukMnwAAAD9JREFUeF7t2DEBADAIxEBaS/jXRpeqeO6WeMjpnikAAAAg2v0FAAAAghkAAAAAsIABAAAAAAsYAAAAABCv6gEvzwJuN2SghwAAAABJRU5ErkJggg==",
+                        transformation: {
+                          width: 800,
+                          height: 100,
+                        },
+                        floating: {
+                          horizontalPosition: {
+                            align: HorizontalPositionAlign.LEFT,
+                          },
+                          verticalPosition: {
+                            align: VerticalPositionAlign.TOP,
+                          },
+                          wrap: {
+                            type: TextWrappingType.SQUARE,
+                            side: TextWrappingSide.BOTH_SIDES,
+                          },
+                        },
+                      }),
+                    ],
+                  }),
                   docData.getHeader(docjs.familyname, docjs.firstname),
                   docData.getBufferLogo1stPage(),
                   docData.getBufferLogo(),
@@ -81,6 +110,7 @@ export default {
                 children: [
                   docData.getHeader(docjs.familyname, docjs.firstname),
                   docData.getBufferLogo1stPage(),
+                  docData.getHL(),
                 ],
               }),
               /* even: new Header({ // The header on even pages when the 'Different Odd & Even Pages' option is activated
@@ -104,6 +134,7 @@ export default {
                   docData.getFooterR(),
                   docData.getPageNumber(),
                 ],
+
               }),
               /* even: new Footer({ // The footer on even pages when the 'Different Odd & Even Pages' option is activated
                 children: [],
@@ -135,15 +166,15 @@ export default {
               docData.getLangues(docjs.languages),
               docData.getHL(),
 
-              /* docData.getSubTitle("Expériences professionnelles"),
+               docData.getSubTitle("Expériences professionnelles"),
                 docData.LineBreak(),
-                docData.getLangues(docjs.experiences),
+                docData.getExpPro(docjs.experiences),
                 docData.getHL(),
 
                 docData.getSubTitle("Expériences personnelles"),
                 docData.LineBreak(),
-                docData.getLangues(docjs.projects),
-                docData.getHL(),*/
+                docData.getExpPerso(docjs.projects),
+                docData.getHL(),
 
               docData.getSubTitle("Environnement"),
               docData.LineBreak(),
