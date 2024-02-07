@@ -32,6 +32,11 @@ import urldc from "../../_helpers/urllist.js";
 import axios from "axios";
 //import * as fs from 'fs';
 const fs = require("fs");
+import exppro from "../../DocGeneration/cExpPro";
+import expperso from "../../DocGeneration/cExpPerso";
+import comp from "../../DocGeneration/cComps";
+import certs from "../../DocGeneration/cCerts";
+import bref from "../../DocGeneration/cBref";
 export default {
   data() {
     return {
@@ -75,7 +80,7 @@ export default {
             headers: {
               first: new Header({
                 // The header on first page when the 'Different First Page' option is activated
-                children: [                
+                children: [
                   new Paragraph({
                     children: [
                       new ImageRun({
@@ -134,7 +139,6 @@ export default {
                   docData.getFooterR(),
                   docData.getPageNumber(),
                 ],
-
               }),
               /* even: new Footer({ // The footer on even pages when the 'Different Odd & Even Pages' option is activated
                 children: [],
@@ -149,32 +153,43 @@ export default {
               docData.getLineBreak(),
               docData.getLine("Email:   ", docjs.email),
               docData.LineBreak(),
-              docData.getSubTitle("Compétences fonctionnelles"),
-              docData.getComp(docjs.functionalAbilities),
+              comp.getSubTitle("Compétences fonctionnelles"),
+              comp.getComp(docjs.functionalAbilities),
               docData.getHL(),
               docData.LineBreak(),
-              docData.getSubTitle("Compétences techniques"),
-              docData.getComp(docjs.technicalAbilities),
+              comp.getSubTitle("Compétences techniques"),
+              comp.getComp(docjs.technicalAbilities),
               docData.getHL(),
               docData.LineBreak(),
-              docData.getSubTitle("Diplômes / Certifications"),
+              certs.getSubTitle("Diplômes / Certifications"),
               docData.LineBreak(),
-              docData.getCerts(docjs.certifications),
+              certs.getCerts(docjs.certifications),
               docData.getHL(),
+              docData.LineBreak(),
               docData.getSubTitle("Langues"),
               //docData.LineBreak(),
               docData.getLangues(docjs.languages),
               docData.getHL(),
+              docData.LineBreak(),
+              exppro.getSubTitle("Expériences professionnelles"),
+              docData.LineBreak(),
+              // exppro.getTitle(docjs.experiences, 0),
+              exppro.getExpPro(docjs.experiences),
+              /* exppro.getTitle(docjs.experiences, 1),
+                exppro.getExpPro(docjs.experiences, 1),
+                exppro.getTitle(docjs.experiences, 2),
+                exppro.getExpPro(docjs.experiences, 2),
+                exppro.getTitle(docjs.experiences, 3),
+                exppro.getExpPro(docjs.experiences, 3),
+                exppro.getTitle(docjs.experiences, 4),
+                exppro.getExpPro(docjs.experiences, 4),*/
+              // docData.getExpPro(docjs.experiences),
+              docData.getHL(),
 
-               docData.getSubTitle("Expériences professionnelles"),
-                docData.LineBreak(),
-                docData.getExpPro(docjs.experiences),
-                docData.getHL(),
-
-                docData.getSubTitle("Expériences personnelles"),
-                docData.LineBreak(),
-                docData.getExpPerso(docjs.projects),
-                docData.getHL(),
+              expperso.getSubTitle("Expériences personnelles"),
+              docData.LineBreak(),
+              expperso.getExpPerso(docjs.projects),
+              docData.getHL(),
 
               docData.getSubTitle("Environnement"),
               docData.LineBreak(),
@@ -201,7 +216,7 @@ export default {
               docData.getLine2(docjs.skills.systems),
               docData.getHL(),
 
-              docData.getSubTitle("En bref"),
+              bref.getSubTitle("En bref"),
               docData.LineBreak(),
               docData.getLine2(docjs.bref),
               docData.getHL(),
