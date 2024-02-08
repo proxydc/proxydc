@@ -54,7 +54,7 @@ var inactivityTime = function () {
     //alert("You are now logged out.");
     if (localStorage.getItem("useraccount") != "") {
       localStorage.setItem("useraccount", "");
-      location.href = "http://localhost:8080";
+      location.href = process.env.NODE_ENV == 'production' ? process.env.VUE_APP_SITEURLPROD : process.env.VUE_APP_SITEURLDEV;
       //this.$router.push({ name: "Home" });
     }
   }

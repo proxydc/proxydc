@@ -118,10 +118,8 @@ export default {
       self.$router.push(`/formCandidatSaisie/${dcId}`);
     },
     CopyUrl(id) {
-      let siteurl = 'http://localhost:8080'
-      if (process.env.NODE_ENV == 'development') {
-        siteurl = "https://mysitevue.onrender.com";
-      }
+      let siteurl = process.env.NODE_ENV == 'production' ? process.env.VUE_APP_SITEURLPROD : process.env.VUE_APP_SITEURLDEV;     
+      console.log("siteurl: "+ siteurl + process.env.NODE_ENV)
       var content = siteurl + "/#/formCandidatSaisie/" + id;
       navigator.clipboard.writeText(content);
     },
