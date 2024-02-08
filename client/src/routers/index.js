@@ -6,7 +6,7 @@ import Home from "../components/Home.vue";
 import LoginAccount from "../components/LoginAccount.vue";
 import NotFound from "../components/NotFound";
 import PageEnd from "../components/PageEnd";
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import { authGuard } from "../_helpers/auth-guard";
 import admin from "../admin/admin.vue";
 import AdminLayout from "../admin/admin_Layout.vue";
@@ -52,7 +52,7 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes
 });
 
