@@ -7,7 +7,7 @@ const cors = require('cors');
 app.use(express.json());
 app.use(cors({
     origin:  app.get("env") == "development"
-    ? "http://localhost:8080" : "https://mysitevue.onrender.com",
+    ? VUE_APP_SITEURLDEV : VUE_APP_SITEURLPROD,
 }));
 
 app.get("/", (req, res)=> {
