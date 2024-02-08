@@ -55,7 +55,12 @@ export default {
         let result = await axios.post(urlacc.getLoginUrl(), {
           login_name: this.login_name,
           pass_word: this.pass_word,
-        });
+        },
+       /* {
+  headers: {
+    'Access-Control-Allow-Origin': 'http://localhost:3000'
+  },
+  }*/);
         console.log("result: " + result.status + "nnn" + result.message);
         switch (result.status) {
           case 200:
