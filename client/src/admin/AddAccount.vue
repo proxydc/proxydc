@@ -46,7 +46,7 @@ export default {
           login_name: "",
           display_name: "",
           pass_word: "",
-          role_id: "",
+          role_id: 2,
         }
       }
 
