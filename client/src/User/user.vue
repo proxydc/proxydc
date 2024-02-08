@@ -34,7 +34,8 @@
               <a class="btn btn-outline-success btn-sm" :href="'/#/formCandidatSaisie/' + acRow.id" target="_blank">
                 Voir le dossier
               </a>
-              <img type="button" class="btn btn-outline-warning btn-sm" src="../assets/copyimage.png" @click="CopyUrl(acRow.id)" />
+              <img type="button" class="btn btn-outline-warning btn-sm" src="../assets/copyimage.png"
+                @click="CopyUrl(acRow.id)" />
               <a class="btn btn-outline-primary btn-sm mx-2" :href="'/#/dcDownload/' + acRow.id" target="_blank">
                 Download
               </a>
@@ -117,7 +118,11 @@ export default {
       self.$router.push(`/formCandidatSaisie/${dcId}`);
     },
     CopyUrl(id) {
-      var content = "http://localhost:8080/formCandidatSaisie/" + id;
+      let siteurl = 'http://localhost:8080'
+      if (process.env.NODE_ENV == 'development') {
+        siteurl = "https://mysitevue.onrender.com";
+      }
+      var content = siteurl + "/#/formCandidatSaisie/" + id;
       navigator.clipboard.writeText(content);
     },
   },
