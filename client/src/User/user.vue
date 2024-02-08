@@ -25,17 +25,17 @@
             <td class="text-start">{{ acRow.status_name }}</td>
             <td class="text-start">{{ acRow.tags }}</td>
             <td>
-              <a class="btn btn-success mx-2" :href="'/editDC/' + acRow.id">
+              <a class="btn btn-success mx-2" :href="'/#/editDC/' + acRow.id">
                 Edit
               </a>
               <button type="button" class="btn btn-danger mx-2" @click="deleteDC(acRow.id)">
                 Delete
               </button>
-              <a class="btn btn-outline-success btn-sm" :href="'/formCandidatSaisie/' + acRow.id" target="_blank">
+              <a class="btn btn-outline-success btn-sm" :href="'/#/formCandidatSaisie/' + acRow.id" target="_blank">
                 Voir le dossier
               </a>
               <img type="button" class="btn btn-outline-warning btn-sm" src="../assets/copyimage.png" @click="CopyUrl(acRow.id)" />
-              <a class="btn btn-outline-primary btn-sm mx-2" :href="'/dcDownload/' + acRow.id" target="_blank">
+              <a class="btn btn-outline-primary btn-sm mx-2" :href="'/#/dcDownload/' + acRow.id" target="_blank">
                 Download
               </a>
             </td>
