@@ -11,10 +11,10 @@
             <a class="nav-link active" aria-current="page" href="/addAccount">Add Account</a>
           </li> -->
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="../user">Candidats</a>
+            <button class="nav-link active" aria-current="page" v-on:click="pageCandidats">Candidats</button>
           </li>
           <li class="nav-item" v-if="getUser() == 'admin'">
-            <a class="nav-link active" aria-current="page" href="./admin">Users</a>
+            <button class="nav-link active" aria-current="page" v-on:click="pageAdmin">Users</button>
           </li>
 
         </ul>
@@ -40,6 +40,14 @@ export default {
     getUser() {
       //alert("iam in get user");
       return localStorage.getItem('useraccount')
+    },
+    pageCandidats()
+    {
+      this.$router.push({ name: "user" });
+    },
+    pageAdmin()
+    {
+      this.$router.push({ name: "admin" });
     },
     /*RedirectUser(){
       let self = this;
