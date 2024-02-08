@@ -7,7 +7,7 @@ const cors = require('cors');
 app.use(express.json());
 app.use(cors({
     origin:  app.get("env") == "development"
-    ? VUE_APP_SITEURLDEV : VUE_APP_SITEURLPROD,
+    ? process.env.VUE_APP_SITEURLDEV : process.env.VUE_APP_SITEURLPROD,
 }));
 
 app.get("/", (req, res)=> {
