@@ -1,5 +1,12 @@
-const baseURL = "http://localhost:3000/api/v1/database/"
+const backEndURL =
+  process.env.NODE_ENV == "production"
+    ? process.env.VUE_APP_PRODURL
+    : process.env.VUE_APP_DEVURL;
+const baseURL = backEndURL + "/api/v1/database/";
 class urllist {
+  static getBackEndURL() {
+    return backEndURL;
+  }
     static getLoginUrl() {
         return baseURL + "account";
     }
