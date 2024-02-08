@@ -23,11 +23,11 @@
                 <th scope="row">{{ acRow.id }}</th>
                 <td class="text-start">{{ acRow.login_name }}</td>
                 <td class="text-start">{{ acRow.display_name }}</td>
-                <td class="text-start">{{ acRow.role_name}}</td>
-                <td class="text-start">
-                  <a class="btn btn-success mx-2" :href="'/editAccount/' + acRow.id">
+                <td class="text-start">{{ acRow.role_name }}</td>
+                <td class="text-start"><!--:href="'/editAccount/' + acRow.id"-->
+                  <button class="btn btn-success mx-2" @click="editAccount(acRow.id)">
                     Edit
-                  </a>
+                  </button>
                   <button type="button" class="btn btn-danger mx-2" @click="deleteAccount(acRow.id)">
                     Delete
                   </button>
@@ -47,54 +47,58 @@ import Admin_Layout from "../admin/admin_Layout.vue";
 import urlacc from "../_helpers/urllist.js";
 import $ from "jquery";
 export default {
-    name: "admin",
-    data() {
-        return {
-            AcRows: [],
-            error: "",
-        };
-    },
-    mounted() {
-        try {
-         
-            this.getLogins();
-            console.log("data: " + this.AcRows);
-        }
-        catch (err) {
-            this.error = err.message;
-        }
-    },
-    methods: {
-        getLogins() {
-            const url = urlacc.getLoginUrl();// 'http://localhost:3000/api/v1/database/account';
-            axios.get(url).then(res => {
-                console.log(res.data);
-                this.AcRows = res.data;
-                $(document).ready(function () {
-        $('#admintable').DataTable();
+  name: "admin",
+  data() {
+    return {
+      AcRows: [],
+      error: "",
+    };
+  },
+  mounted() {
+    try {
+
+      this.getLogins();
+      console.log("data: " + this.AcRows);
+    }
+    catch (err) {
+      this.error = err.message;
+    }
+  },
+  methods: {
+    getLogins() {
+      const url = urlacc.getLoginUrl();// 'http://localhost:3000/api/v1/database/account';
+      axios.get(url).then(res => {
+        console.log(res.data);
+        this.AcRows = res.data;
+        $(document).ready(function () {
+          $('#admintable').DataTable();
+        });
       });
-            });
-        },
-        openAddAccount() {
+    },
+    openAddAccount() {
       this.$router.push({ name: "AddAccount" });
     },
-        deleteAccount(accountId) {
-            //alert("account: " + accountId);
-            if (confirm('Are you sure, you want to delete this account. Account Id: ' + accountId)) {
-                const url = urlacc.getEditDelAccUrl(accountId);// `http://localhost:3000/api/v1/database/account/${accountId}`;
-                //alert("url: " + url);
-                axios.delete(url).then(res => {
-                    console.log(res.data);
-                    this.getLogins();
-                }).catch(function (err) {
-                    if (err.response) {
-                        this.errorlst = err.response.data.errors;
-                    }
-                });
-            }
-        }
+    deleteAccount(accountId) {
+      //alert("account: " + accountId);
+      if (confirm('Are you sure, you want to delete this account. Account Id: ' + accountId)) {
+        const url = urlacc.getEditDelAccUrl(accountId);// `http://localhost:3000/api/v1/database/account/${accountId}`;
+        //alert("url: " + url);
+        axios.delete(url).then(res => {
+          console.log(res.data);
+          this.getLogins();
+        }).catch(function (err) {
+          if (err.response) {
+            this.errorlst = err.response.data.errors;
+          }
+        });
+      }
     },
-    components: { Admin_Layout }
+    editAccount(accountId) {
+      this.$router.push({ path: "/editAccount/" + accountId });
+
+    },
+  },
+  components: { Admin_Layout }
 };
 </script>
   
