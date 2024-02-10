@@ -3,6 +3,9 @@
     <div v-if="error != ''" class="alert alert-danger alert-dismissible fade show">
       <strong>{{ error }}</strong>
     </div>
+    <div v-if="warning != ''" class="alert alert-info alert-dismissible fade show">
+      <strong>{{ warning }}</strong>
+    </div>
     <h1>Add Candidat</h1>
     <div class="container w-50 p-3 my-1 bg-light border border-info">
       <form class="was-validated" @submit.prevent="addDC">
@@ -33,6 +36,7 @@ export default {
   data() {
     return {
       error: "",
+      warning: "",
       model: {
         dc: {
           familyname: "",
@@ -63,6 +67,12 @@ export default {
         console.log(result);
         if (result.status == 201) {
           this.$router.push({ name: 'user' })
+        }
+        if (result.status == 204) {
+          this.error = result.data;
+        }
+        if (result.status == 203) {
+          this.warning = result.data;
         }
       }
       catch (err) {
