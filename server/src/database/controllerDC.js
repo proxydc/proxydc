@@ -58,24 +58,34 @@ const addDC = (req, res) => {
   try {
     //check if DC exists
     pool.query(queries.checkDCExists, [email], (error, results) => {
-      if (error) throw error;
-      if (results.rows.length) {
-        res.status(203).send("Candidat already exists.");
-      } else {
-        //add DC to db
-        let initialDocument = docTemplate.GetDocTemp(
-          familyname,
-          firstname,
-          email
-        );
-        pool.query(
-          queries.addDC,
-          [familyname, firstname, email, dcStatus, initialDocument],
-          (error, results) => {
-            if (error) throw error;
-            res.status(201).send("Candidat created Successfully!");
-          }
-        );
+      try {
+        if (error) throw error;
+        if (results.rows.length) {
+          res.status(203).send("Candidat already exists.");
+        } else {
+          //add DC to db
+          let initialDocument = docTemplate.GetDocTemp(
+            familyname,
+            firstname,
+            email
+          );
+          pool.query(
+            queries.addDC,
+            [familyname, firstname, email, dcStatus, initialDocument],
+            (error, results) => {
+              try {
+                if (error) throw error;
+                res.status(201).send("Candidat created Successfully!");
+              } catch (err) {
+                console.log("catch: " + err);
+                res.status(204).json("Error Database");
+              }
+            }
+          );
+        }
+      } catch (err) {
+        console.log("catch: " + err);
+        res.status(204).json("Error Database");
       }
     });
   } catch (err) {

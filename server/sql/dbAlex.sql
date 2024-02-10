@@ -34,7 +34,7 @@ CREATE TABLE dc(
     id UUID PRIMARY KEY NOT NULL DEFAULT uuid_generate_v4(),
     firstname VARCHAR(32) NOT NULL,
     familyname VARCHAR(32) NOT NULL,
-    email VARCHAR(32) NOT NULL,
+    email VARCHAR(256) NOT NULL,
     dc_status INT REFERENCES dc_status (id), -- Default = 2 ?
     tags VARCHAR(256),
     document JSONB NULL
