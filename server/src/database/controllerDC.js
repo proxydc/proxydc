@@ -78,19 +78,19 @@ const addDC = (req, res) => {
                 res.status(201).send("Candidat created Successfully!");
               } catch (err) {
                 console.log("catch: " + err);
-                res.status(204).json("Error Database");
+                res.status(204).send("Error Database. Error: "+err);
               }
             }
           );
         }
       } catch (err) {
         console.log("catch: " + err);
-        res.status(204).json("Error Database");
+        res.status(204).send("Error Database. Error: "+err);
       }
     });
   } catch (err) {
     console.log("catch: " + err);
-    res.status(204).json("Error Database");
+    res.status(204).send("Error Database. Error: "+err);
   }
 };
 
