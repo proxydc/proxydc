@@ -46,8 +46,8 @@ set document = jsonb_set(document, '{}', '{
   "languages": ["français", "anglais"],
   "certifications": [{"year": 2021, "title": "CISCO"}, {"year": 2018, "title": "CNA5"}],
   "bref": "lorem ipsum dolor",
-  "experiences": [],
-  "projects": [],
+  "experiencesPro": [],
+  "projectsPerso": [],
   "skills": {
     "environments": "Java JEE",
     "languages": "Java JEE",

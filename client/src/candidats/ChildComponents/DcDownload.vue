@@ -37,6 +37,12 @@ import expperso from "../../DocGeneration/cExpPerso";
 import comp from "../../DocGeneration/cComps";
 import certs from "../../DocGeneration/cCerts";
 import bref from "../../DocGeneration/cBref";
+/*import docConv from "docx-pdf";
+const path = require('path');
+const unoconv = require('awesome-unoconv');
+//Place your word file in source
+const sourceFilePath = path.resolve('./word_file.docx');
+const outputFilePath = path.resolve('./myDoc.pdf');*/
 export default {
   data() {
     return {
@@ -81,30 +87,30 @@ export default {
               first: new Header({
                 // The header on first page when the 'Different First Page' option is activated
                 children: [
-                  new Paragraph({
-                    children: [
-                      new ImageRun({
-                        type: "png",
-                        data: "iVBORw0KGgoAAAANSUhEUgAABAAAAAAFCAYAAADbn54jAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAJcEhZcwAACxEAAAsRAX9kX5EAAAAGYktHRAD+AP4A/usY1IIAAAAJdnBBZwAABAAAAAJAABJgAnEAAAAldEVYdGNyZWF0ZS1kYXRlADIwMTEtMDEtMDNUMTY6MDE6NTYrMDA6MDAJWHqrAAAAJXRFWHRtb2RpZnktZGF0ZQAyMDExLTAxLTAzVDE2OjAxOjU2KzAwOjAwVukMnwAAAD9JREFUeF7t2DEBADAIxEBaS/jXRpeqeO6WeMjpnikAAAAg2v0FAAAAghkAAAAAsIABAAAAAAsYAAAAABCv6gEvzwJuN2SghwAAAABJRU5ErkJggg==",
-                        transformation: {
-                          width: 800,
-                          height: 100,
-                        },
-                        floating: {
-                          horizontalPosition: {
-                            align: HorizontalPositionAlign.LEFT,
-                          },
-                          verticalPosition: {
-                            align: VerticalPositionAlign.TOP,
-                          },
-                          wrap: {
-                            type: TextWrappingType.SQUARE,
-                            side: TextWrappingSide.BOTH_SIDES,
-                          },
-                        },
-                      }),
-                    ],
-                  }),
+                  /* new Paragraph({
+                     children: [
+                       new ImageRun({
+                         type: "png",
+                         data: "iVBORw0KGgoAAAANSUhEUgAABAAAAAAFCAYAAADbn54jAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAJcEhZcwAACxEAAAsRAX9kX5EAAAAGYktHRAD+AP4A/usY1IIAAAAJdnBBZwAABAAAAAJAABJgAnEAAAAldEVYdGNyZWF0ZS1kYXRlADIwMTEtMDEtMDNUMTY6MDE6NTYrMDA6MDAJWHqrAAAAJXRFWHRtb2RpZnktZGF0ZQAyMDExLTAxLTAzVDE2OjAxOjU2KzAwOjAwVukMnwAAAD9JREFUeF7t2DEBADAIxEBaS/jXRpeqeO6WeMjpnikAAAAg2v0FAAAAghkAAAAAsIABAAAAAAsYAAAAABCv6gEvzwJuN2SghwAAAABJRU5ErkJggg==",
+                         transformation: {
+                           width: 800,
+                           height: 100,
+                         },
+                         floating: {
+                           horizontalPosition: {
+                             align: HorizontalPositionAlign.LEFT,
+                           },
+                           verticalPosition: {
+                             align: VerticalPositionAlign.TOP,
+                           },
+                           wrap: {
+                             type: TextWrappingType.SQUARE,
+                             side: TextWrappingSide.BOTH_SIDES,
+                           },
+                         },
+                       }),
+                     ],
+                   }),*/
                   docData.getHeader(docjs.familyname, docjs.firstname),
                   docData.getBufferLogo1stPage(),
                   docData.getBufferLogo(),
@@ -136,7 +142,7 @@ export default {
                 children: [
                   docData.getFooterC(docjs.familyname, docjs.firstname),
                   docData.getFooterL(),
-                  docData.getFooterR(),
+                  //docData.getFooterR(),
                   docData.getPageNumber(),
                 ],
               }),
@@ -173,22 +179,13 @@ export default {
               docData.LineBreak(),
               exppro.getSubTitle("Expériences professionnelles"),
               docData.LineBreak(),
-              // exppro.getTitle(docjs.experiences, 0),
-              exppro.getExpPro(docjs.experiences),
-              /* exppro.getTitle(docjs.experiences, 1),
-                exppro.getExpPro(docjs.experiences, 1),
-                exppro.getTitle(docjs.experiences, 2),
-                exppro.getExpPro(docjs.experiences, 2),
-                exppro.getTitle(docjs.experiences, 3),
-                exppro.getExpPro(docjs.experiences, 3),
-                exppro.getTitle(docjs.experiences, 4),
-                exppro.getExpPro(docjs.experiences, 4),*/
-              // docData.getExpPro(docjs.experiences),
+
+              exppro.getExpPro(docjs.experiencesPro),
               docData.getHL(),
 
               expperso.getSubTitle("Expériences personnelles"),
               docData.LineBreak(),
-              expperso.getExpPerso(docjs.projects),
+              expperso.getExpPerso(docjs.projectsPerso),
               docData.getHL(),
 
               docData.getSubTitle("Environnement"),
@@ -237,6 +234,26 @@ export default {
       });
       // To export into a .docx file
       this.saveDocumentToFile(doc, `vuedoc.docx`);
+      this.savetoPdf(doc);
+
+    },
+
+    savetoPdf(docword) {
+      /*unoconv
+        .convert(docword, outputFilePath)
+        .then(result => {
+          console.log(result); // return outputFilePath
+        })
+        .catch(err => {
+          console.log(err);
+        });
+       docConv(doc, './output.pdf', function (err, result) {
+         if (err) {
+           console.log(err);
+         }
+         console.log('result' + result);
+       });*/
+
     },
     saveDocumentToFile(doc, fileName) {
       const mimeType =

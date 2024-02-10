@@ -129,9 +129,9 @@ class FormData {
                 experiencesPro.push(currentExperience)
             }
         }
-        dc.experiences = experiencesPro;
-        console.log("document experiences values: " + dc.experiences[0]?.start);
-        alert("document experiences values: " + dc.experiences[0]?.end);
+        dc.experiencesPro = experiencesPro;
+        console.log("document experiences values: " + dc.experiencesPro[0]?.start);
+        alert("document experiences values: " + dc.experiencesPro[0]?.end);
         /* Projects perso */
         var personalProjects = [];
         var domNodes = document.querySelectorAll("#projects .project");
@@ -167,9 +167,9 @@ class FormData {
             console.log("document curr projects values: " + currentProject.period);
         }
 
-        dc.projects = personalProjects;
-        console.log("document projects values: " + dc.projects[0]?.period);
-        //alert("document projects values: " + dc.projects[0]?.title);
+        dc.projectsPerso = personalProjects;
+        console.log("document projects values: " + dc.projectsPerso[0]?.period);
+        //alert("document projects values: " + dc.projectsPerso[0]?.title);
         return dc;
     }
 }
