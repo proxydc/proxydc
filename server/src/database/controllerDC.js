@@ -1,6 +1,7 @@
 const pool = require("../../db");
 const queries = require("./queries");
 const docTemplate = require("./documentTemplate");
+const { response } = require("express");
 const dcStatus = 1;
 const getDCs = (req, res) => {
   pool.query(queries.getDCs, (error, results) => {
@@ -61,7 +62,7 @@ const addDC = (req, res) => {
       try {
         if (error) throw error;
         if (results.rows.length) {
-          res.status(203).send("Candidat already exists.");
+          res.status(201).send("Candidat already exists.");
         } else {
           //add DC to db
           let initialDocument = docTemplate.GetDocTemp(
@@ -75,22 +76,22 @@ const addDC = (req, res) => {
             (error, results) => {
               try {
                 if (error) throw error;
-                res.status(201).send("Candidat created Successfully!");
+                res.status(200).send("Candidat created Successfully!");
               } catch (err) {
                 console.log("catch: " + err);
-                res.status(204).send("Error Database. Error: "+err);
+                res.status(203).json("Error: " + err);
               }
             }
           );
         }
       } catch (err) {
         console.log("catch: " + err);
-        res.status(204).send("Error Database. Error: "+err);
+        res.status(203).json({ error: err });
       }
     });
   } catch (err) {
     console.log("catch: " + err);
-    res.status(204).send("Error Database. Error: "+err);
+    res.status(203).json({ error: err });
   }
 };
 
