@@ -97,7 +97,7 @@ export default {
           tags: this.model.candidat.tags,
         });
         console.log(result);
-        if (result.status == 200) {
+        if (result.status == 201) {
           this.$router.push({ name: "user" });
         }
       } catch (err) {

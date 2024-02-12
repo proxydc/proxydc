@@ -293,7 +293,7 @@ class DocData {
       children: [
         new TextRun({
           text: "",
-          break: 1,
+          //break: 1,
         }),
       ],
     });
