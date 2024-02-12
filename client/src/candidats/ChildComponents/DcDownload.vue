@@ -37,6 +37,7 @@ import expperso from "../../DocGeneration/cExpPerso";
 import comp from "../../DocGeneration/cComps";
 import certs from "../../DocGeneration/cCerts";
 import bref from "../../DocGeneration/cBref";
+import lang from "../../DocGeneration/cLang"
 /*import docConv from "docx-pdf";
 const path = require('path');
 const unoconv = require('awesome-unoconv');
@@ -152,67 +153,79 @@ export default {
             },
             children: [
               docData.getTitle(),
+
               docData.LineBreak(),
               docData.getLine("Nom:     ", docjs.familyname),
               docData.getLineBreak(),
               docData.getLine("Prénom: ", docjs.firstname),
               docData.getLineBreak(),
               docData.getLine("Email:   ", docjs.email),
+
               docData.LineBreak(),
               comp.getSubTitle("Compétences fonctionnelles"),
               comp.getComp(docjs.functionalAbilities),
               docData.getHL(),
+
               docData.LineBreak(),
               comp.getSubTitle("Compétences techniques"),
               comp.getComp(docjs.technicalAbilities),
               docData.getHL(),
+
               docData.LineBreak(),
               certs.getSubTitle("Diplômes / Certifications"),
               docData.LineBreak(),
               certs.getCerts(docjs.certifications),
               docData.getHL(),
+
               docData.LineBreak(),
               docData.getSubTitle("Langues"),
               //docData.LineBreak(),
-              docData.getLangues(docjs.languages),
+              lang.getLangues(docjs.languages),
               docData.getHL(),
+
               docData.LineBreak(),
               exppro.getSubTitle("Expériences professionnelles"),
               docData.LineBreak(),
-
               exppro.getExpPro(docjs.experiencesPro),
               docData.getHL(),
 
+              docData.LineBreak(),
               expperso.getSubTitle("Expériences personnelles"),
               docData.LineBreak(),
               expperso.getExpPerso(docjs.projectsPerso),
               docData.getHL(),
 
+              docData.LineBreak(),
               docData.getSubTitle("Environnement"),
               docData.LineBreak(),
               docData.getLine2(docjs.skills.environments),
               docData.getHL(),
 
+              docData.LineBreak(),
               docData.getSubTitle("Languages"),
               docData.LineBreak(),
               docData.getLine2(docjs.skills.languages),
               docData.getHL(),
 
+              docData.LineBreak(),
               docData.getSubTitle("SGBD"),
               docData.LineBreak(),
               docData.getLine2(docjs.skills.databases),
               docData.getHL(),
 
+              docData.LineBreak(),
               docData.getSubTitle("Outils"),
               docData.LineBreak(),
               docData.getLine2(docjs.skills.tools),
               docData.getHL(),
 
+              docData.LineBreak(),
               docData.getSubTitle("Systèmes"),
               docData.LineBreak(),
               docData.getLine2(docjs.skills.systems),
               docData.getHL(),
 
+              docData.LineBreak(),
               bref.getSubTitle("En bref"),
               docData.LineBreak(),
               docData.getLine2(docjs.bref),

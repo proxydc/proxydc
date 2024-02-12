@@ -73,9 +73,11 @@ class DocData {
         new TextRun({
           text: col,
           bold: true,
+          size: 30,
         }),
         new TextRun({
           children: [new Tab(), text],
+          size: 28,
         }),
       ],
     });

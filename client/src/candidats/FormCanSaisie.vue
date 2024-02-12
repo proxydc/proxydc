@@ -71,7 +71,6 @@
               <div class="col col-8">
                 <input
                   @keydown.enter="focusnext"
-                  :maxlength="maxInputLength"
                   class="form-control"
                   id="syn_env"
                   v-model="dc.document.skills.environments"
@@ -197,7 +196,7 @@ export default {
       document: {},
       xpAddedCounter: 0,
       errormsg: "",
-      maxInputLength: 512,
+      maxInputLength: 85,
     };
   },
   setup() {
