@@ -65,13 +65,13 @@ export default {
           email: this.model.dc.email,
         });
         console.log(result);
-        if (result.status == 200) {
+        if (result.status == 201) {
           this.$router.push({ name: 'user' })
         }
         if (result.status == 203) {
           this.error = result.data;
         }
-        if (result.status == 201) {
+        if (result.status == 202) {
           this.warning = result.data;
         }
       }

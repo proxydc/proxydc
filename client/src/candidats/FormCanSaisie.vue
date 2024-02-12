@@ -4,42 +4,78 @@
       <div class="container">
         <p class="h2 dc-page-title">Dossier de compétences</p>
       </div>
-      <div v-if="errormsg" class="alert alert-danger alert-dismissible fade show">
+      <div
+        v-if="errormsg"
+        class="alert alert-danger alert-dismissible fade show"
+      >
         <strong>Error!</strong> <br />{{ errormsg }}
       </div>
       <div class="container p-3 my-5 bg-light border border-primary dc-form">
         <form action="" @submit.prevent="onSubmit">
-          <dcIdentity :familyname="dc.familyname" :firstname="dc.firstname" :email="dc.email" />
+          <dcIdentity
+            :familyname="dc.familyname"
+            :firstname="dc.firstname"
+            :email="dc.email"
+          />
           <div class="row dc-section">
             <div class="col">
-              <AbilityFonc title="Compétences fonctionnelles" uid="fonct" :maxILength="maxInputLength"
-                :functionalAbilities="dc.document.functionalAbilities" />
+              <AbilityFonc
+                title="Compétences fonctionnelles"
+                uid="fonct"
+                :maxILength="maxInputLength"
+                :functionalAbilities="dc.document.functionalAbilities"
+              />
             </div>
             <div class="col">
-              <AbilityTech title="Compétences techniques" uid="techn" :maxILength="maxInputLength"
-                :functionalAbilities="dc.document.technicalAbilities" />
+              <AbilityTech
+                title="Compétences techniques"
+                uid="techn"
+                :maxILength="maxInputLength"
+                :functionalAbilities="dc.document.technicalAbilities"
+              />
             </div>
           </div>
           <div class="row dc-section">
             <div class="col">
-              <Certification :certifications="dc.document.certifications" :maxILength="maxInputLength" />
+              <Certification
+                :certifications="dc.document.certifications"
+                :maxILength="maxInputLength"
+              />
             </div>
             <div class="col">
-              <Language :languages="dc.document.languages" :maxILength="maxInputLength" />
+              <Language
+                :languages="dc.document.languages"
+                :maxILength="maxInputLength"
+              />
             </div>
           </div>
 
-          <ExperiencePro :experiences="dc.document.experiencesPro" :xpAddedCounter=0 :maxILength="maxInputLength" />
-          <ExperiencePerso :projects="dc.document.projectsPerso" :xpAddedCounter=0 :maxILength="maxInputLength" />
+          <ExperiencePro
+            :experiences="dc.document.experiencesPro"
+            :xpAddedCounter="0"
+            :maxILength="maxInputLength"
+          />
+          <ExperiencePerso
+            :projects="dc.document.projectsPerso"
+            :xpAddedCounter="0"
+            :maxILength="maxInputLength"
+          />
 
           <div class="container dc-section">
             <div class="row align-items-center dc-syn-item">
               <div class="col col-2">
-                <label class="col-form-label" for="syn_env">Environnement</label>
+                <label class="col-form-label" for="syn_env"
+                  >Environnement</label
+                >
               </div>
               <div class="col col-8">
-                <input @keydown.enter="focusnext" :maxlength="maxInputLength" class="form-control" id="syn_env"
-                  v-model="dc.document.skills.environments" />
+                <input
+                  @keydown.enter="focusnext"
+                  :maxlength="maxInputLength"
+                  class="form-control"
+                  id="syn_env"
+                  v-model="dc.document.skills.environments"
+                />
               </div>
             </div>
             <div class="row align-items-center dc-syn-item">
@@ -47,8 +83,12 @@
                 <label class="col-form-label" for="syn_lang">Languages</label>
               </div>
               <div class="col-8">
-                <input @keydown.enter="focusnext" class="form-control" id="syn_lang"
-                  v-model="dc.document.skills.languages" />
+                <input
+                  @keydown.enter="focusnext"
+                  class="form-control"
+                  id="syn_lang"
+                  v-model="dc.document.skills.languages"
+                />
               </div>
             </div>
             <div class="row align-items-center dc-syn-item">
@@ -56,8 +96,12 @@
                 <label class="col-form-label" for="syn_bdd">SGBD</label>
               </div>
               <div class="col-8">
-                <input @keydown.enter="focusnext" class="form-control" id="syn_bdd"
-                  v-model="dc.document.skills.databases" />
+                <input
+                  @keydown.enter="focusnext"
+                  class="form-control"
+                  id="syn_bdd"
+                  v-model="dc.document.skills.databases"
+                />
               </div>
             </div>
             <div class="row align-items-center dc-syn-item">
@@ -65,7 +109,12 @@
                 <label class="col-form-label" for="syn_out">Outils</label>
               </div>
               <div class="col-8">
-                <input @keydown.enter="focusnext" class="form-control" id="syn_out" v-model="dc.document.skills.tools" />
+                <input
+                  @keydown.enter="focusnext"
+                  class="form-control"
+                  id="syn_out"
+                  v-model="dc.document.skills.tools"
+                />
               </div>
             </div>
             <div class="row align-items-center dc-syn-item">
@@ -73,8 +122,12 @@
                 <label class="col-form-label" for="syn_sys">Systèmes</label>
               </div>
               <div class="col-8">
-                <input @keydown.enter="focusnext" class="form-control" id="syn_sys"
-                  v-model="dc.document.skills.systems" />
+                <input
+                  @keydown.enter="focusnext"
+                  class="form-control"
+                  id="syn_sys"
+                  v-model="dc.document.skills.systems"
+                />
               </div>
             </div>
           </div>
@@ -82,7 +135,11 @@
           <div class="row dc-section">
             <div class="col">
               <h5>En bref</h5>
-              <textarea class="form-control dc-ta-bref" placeholder="..." v-model="dc.document.bref"></textarea>
+              <textarea
+                class="form-control dc-ta-bref"
+                placeholder="..."
+                v-model="dc.document.bref"
+              ></textarea>
             </div>
           </div>
 
@@ -92,7 +149,11 @@
                 <button type="button" class="btn btn-primary" @click="save(dc)">
                   Enregistrer
                 </button>
-                <button type="button" class="btn btn-warning" @click="saveAndClose(dc)">
+                <button
+                  type="button"
+                  class="btn btn-warning"
+                  @click="saveAndClose(dc)"
+                >
                   Marquer comme finalisé
                 </button>
               </div>
@@ -116,7 +177,7 @@ import ExperiencePerso from "./ChildComponents/DcExperiencePerso.vue";
 import urldc from "../_helpers/urllist.js";
 import axios from "axios";
 import FormData from "./FormData";
-
+import enumDcStatus from "../_helpers/enum-dcStatus.js";
 
 export default {
   components: {
@@ -188,9 +249,11 @@ export default {
         const url = urldc.getDcUrl(id);
         axios.get(url).then((res) => {
           console.log(res.data);
-          if (res.status == 200) { this.form = res.data; }
-          if (res.status == 201) {
-            this.$router.push({ name: 'NotFound' })
+          if (res.status == 200) {
+            this.form = res.data;
+          }
+          if (res.status == 202) {
+            this.$router.push({ name: "NotFound" });
           }
         });
       } catch (err) {
@@ -199,9 +262,14 @@ export default {
     },
     save(dc) {
       try {
-        alert("idwork: " + this.documentId)
-        const status = 2;
-        FormData.save(this.$route.params.id, dc.document, document, status);
+        alert("idwork: " + this.documentId);
+        //const status = 2;
+        FormData.save(
+          this.$route.params.id,
+          dc.document,
+          document,
+          enumDcStatus.Saisie_Encours
+        );
         location.reload();
       } catch (err) {
         this.errormsg = err;
@@ -209,10 +277,21 @@ export default {
     },
     saveAndClose(dc) {
       try {
-        alert("idwork: " + this.documentId)
-        const status = 3;
-        FormData.save(this.$route.params.id, dc.document, document, status);
-        this.$router.push({ name: "PageEnd" })
+        alert("idwork: " + this.documentId);
+        //const status = 3;
+        FormData.save(
+          this.$route.params.id,
+          dc.document,
+          document,
+          enumDcStatus.Finalisé
+        );
+        const acc = localStorage.getItem("useraccount");
+        alert("user: " + acc);
+        if (acc == "admin" || acc == "user") {
+          this.$router.push({ name: "user" });
+        } else {
+          this.$router.push({ name: "PageEnd" });
+        }
       } catch (err) {
         this.errormsg = err;
       }

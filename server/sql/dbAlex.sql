@@ -27,7 +27,7 @@ CREATE TABLE dc_status(
     label VARCHAR(32) NOT NULL
 );
 
-INSERT INTO public.dc_status(id, label)	VALUES (1, 'Initialisé'),(2, 'Saisie Encours'), (3, 'Finalisé'), (4, 'Terminé');
+INSERT INTO public.dc_status(id, label)	VALUES (1, 'Initialisé'),(2, 'Saisie_Encours'), (3, 'Finalisé'), (4, 'Terminé');
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE dc(

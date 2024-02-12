@@ -3,6 +3,7 @@ const queries = require("./queries");
 const docTemplate = require("./documentTemplate");
 const { response } = require("express");
 const dcStatus = 1;
+//get-200
 const getDCs = (req, res) => {
   pool.query(queries.getDCs, (error, results) => {
     try {
@@ -10,10 +11,11 @@ const getDCs = (req, res) => {
       res.status(200).json(results.rows);
     } catch (err) {
       console.log("catch: " + err);
-      res.status(204).json("Error Database");
+      res.status(203).json({ error: "Error Database! " + err });
     }
   });
 };
+//get-200
 const getDCById = (req, res) => {
   const id = req.params.id;
   pool.query(queries.getDCById, [id], (error, results) => {
@@ -22,10 +24,11 @@ const getDCById = (req, res) => {
       res.status(200).json(results.rows);
     } catch (err) {
       console.log("catch: " + err);
-      res.status(204).json("Error Database");
+      res.status(203).json({ error: "Error Database! " + err });
     }
   });
 };
+//get-200
 const getDCByIdCandidat = (req, res) => {
   try {
     const id = req.params.id;
@@ -34,14 +37,15 @@ const getDCByIdCandidat = (req, res) => {
       if (results.rows[0].dc_status == 1 && results.rows[0].dc_status == 2) {
         res.status(200).json(results.rows);
       } else {
-        res.status(203).json("Access denied!");
+        res.status(202).json("Access denied!");
       }
     });
   } catch (err) {
     console.log("catch: " + err);
-    res.status(204).json("Error Database");
+    res.status(203).json({ error: "Error Database! " + err });
   }
 };
+//get-200
 const getDCDocById = (req, res) => {
   try {
     const id = req.params.id;
@@ -51,9 +55,23 @@ const getDCDocById = (req, res) => {
     });
   } catch (err) {
     console.log("catch: " + err);
-    res.status(204).json("Error Database");
+    res.status(203).json({ error: "Error Database! " + err });
   }
 };
+//get-200
+const getAllDcStatus = (req, res) => {
+  try {
+    pool.query(queries.getAllDcStatus, (error, results) => {
+      if (error) throw error;
+      res.status(200).json(results.rows);
+    });
+  } catch (err) {
+    console.log("catch: " + err);
+    res.status(203).json({ error: "Error Database! " + err });
+  }
+};
+
+//post 201
 const addDC = (req, res) => {
   const { familyname, firstname, email } = req.body;
   try {
@@ -62,7 +80,7 @@ const addDC = (req, res) => {
       try {
         if (error) throw error;
         if (results.rows.length) {
-          res.status(201).send("Candidat already exists.");
+          res.status(202).send("Candidat already exists.");
         } else {
           //add DC to db
           let initialDocument = docTemplate.GetDocTemp(
@@ -76,45 +94,51 @@ const addDC = (req, res) => {
             (error, results) => {
               try {
                 if (error) throw error;
-                res.status(200).send("Candidat created Successfully!");
+                res.status(201).send("Candidat created Successfully!");
               } catch (err) {
                 console.log("catch: " + err);
-                res.status(203).json("Error: " + err);
+                res.status(203).json({ error: "Error Database! " + err });
               }
             }
           );
         }
       } catch (err) {
         console.log("catch: " + err);
-        res.status(203).json({ error: err });
+        res.status(203).json("Error Database " + err);
       }
     });
   } catch (err) {
     console.log("catch: " + err);
-    res.status(203).json({ error: err });
+    res.status(203).json({ error: "Error Database! " + err });
   }
 };
-
+//delete-200with content or 204 without content
 const deleteDCById = (req, res) => {
   try {
     const id = req.params.id;
     pool.query(queries.getDCById, [id], (error, results) => {
+      if (error) throw error;
       const noDCFound = !results.rows.length;
       if (noDCFound) {
-        res.status(203).send("Candidat does not exist in the database");
+        res.status(202).send("Candidat does not exist in the database");
       } else {
         pool.query(queries.deleteDCById, [id], (error, results) => {
-          if (error) throw error;
-          res.status(201).send("Candidat deleted Successfully!");
+          try {
+            if (error) throw error;
+            res.status(200).send("Candidat deleted Successfully!");
+          } catch (err) {
+            console.log("catch: " + err);
+            res.status(203).json({ error: "Error Database! " + err });
+          }
         });
       }
     });
   } catch (err) {
     console.log("catch: " + err);
-    res.status(204).json("Error Database");
+    res.status(203).json({ error: "Error Database! " + err });
   }
 };
-
+//put 201
 const updateDCDoc = (req, res) => {
   try {
     const id = req.params.id;
@@ -122,23 +146,28 @@ const updateDCDoc = (req, res) => {
     pool.query(queries.getDCById, [id], (error, results) => {
       const noDCFound = !results.rows.length;
       if (noDCFound) {
-        res.status(203).send("Candidat does not exist in the database");
+        res.status(202).send("Candidat does not exist in the database");
       } else {
         pool.query(
           queries.updateDCDoc,
           [id, document, dc_status],
           (error, results) => {
-            if (error) throw error;
-            res.status(201).send("Candidat updated Successfully!");
+            try {
+              if (error) throw error;
+              res.status(201).send("Candidat updated Successfully!");
+            } catch (err) {
+              res.status(203).json({ error: "Error Database! " + err });
+            }
           }
         );
       }
     });
   } catch (err) {
     console.log("catch: " + err);
-    res.status(204).json("Error Database");
+    res.status(203).json({ error: "Error Database! " + err });
   }
 };
+//put 201
 const updateDCByAdmin = (req, res) => {
   try {
     const id = req.params.id;
@@ -146,35 +175,28 @@ const updateDCByAdmin = (req, res) => {
     pool.query(queries.getDCById, [id], (error, results) => {
       const noDCFound = !results.rows.length;
       if (noDCFound) {
-        res.status(203).send("Candidat does not exist in the database");
+        res.status(202).send("Candidat does not exist in the database");
       } else {
         pool.query(
           queries.updateDCByAdmin,
           [id, familyname, firstname, email, dc_status, tags],
           (error, results) => {
-            if (error) throw error;
-            res.status(201).send("Candidat updated Successfully!");
+            try {
+              if (error) throw error;
+              res.status(201).send("Candidat updated Successfully!");
+            } catch (err) {
+              res.status(203).json({ error: "Error Database! " + err });
+            }
           }
         );
       }
     });
   } catch (err) {
     console.log("catch: " + err);
-    res.status(204).json("Error Database");
+    res.status(203).json({ error: "Error Database! " + err });
   }
 };
 
-const getAllDcStatus = (req, res) => {
-  try {
-    pool.query(queries.getAllDcStatus, (error, results) => {
-      if (error) throw error;
-      res.status(200).json(results.rows);
-    });
-  } catch (err) {
-    console.log("catch: " + err);
-    res.status(204).json("Error Database");
-  }
-};
 
 module.exports = {
   getDCs,
