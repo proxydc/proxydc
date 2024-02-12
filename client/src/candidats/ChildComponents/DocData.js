@@ -66,6 +66,21 @@ class DocData {
   static async urlToBlob(url) {
     return (await fetch(url)).blob();
   }
+  static pageBreak(docjs) {
+    var lines =
+      docjs.functionalAbilities.length +
+      docjs.technicalAbilities.length +
+      docjs.certifications.length +
+      docjs.languages.length;
+    alert("nblines: " + lines);
+    if (lines < 14 && lines > 8) {
+      return new Paragraph({
+        text: "",
+        pageBreakBefore: true,
+      });
+    }
+    return "";
+  }
 
   static getLine(col, text) {
     return new Paragraph({
@@ -164,7 +179,7 @@ class DocData {
         type: ShadingType.REVERSE_DIAGONAL_STRIPE,
         color: "00FFFF",
         fill: "FF0000",
-    },
+      },
     });
   }
 
@@ -309,11 +324,11 @@ class DocData {
     for (var i = 0; i < langs.length; i++) {
       cf.addChildElement(
         new TextRun({
-          text: i+1+")  "+ langs[i],
+          text: i + 1 + ")  " + langs[i],
           break: 1,
-         //bullet: {level: 0},
+          //bullet: {level: 0},
         })
-      )
+      );
     }
     return cf;
   }
@@ -358,7 +373,7 @@ class DocData {
             verticalPosition: {
               align: VerticalPositionAlign.TOP,
             },
-          },         
+          },
         }),
       ],
     });
@@ -383,8 +398,7 @@ class DocData {
             verticalPosition: {
               align: VerticalPositionAlign.TOP,
             },
-          },      
-        
+          },
         }),
       ],
     });
@@ -517,11 +531,11 @@ class DocData {
     for (var i = 0; i < pros.length; i++) {
       cf.addChildElement(
         new TextRun({
-          text: i+1+")  "+ pros[i],
+          text: i + 1 + ")  " + pros[i],
           break: 1,
-         //bullet: {level: 0},
+          //bullet: {level: 0},
         })
-      )
+      );
     }
     return cf;
   }
@@ -532,21 +546,14 @@ class DocData {
     for (var i = 0; i < perso.length; i++) {
       cf.addChildElement(
         new TextRun({
-          text: i+1+")  "+ perso[i],
+          text: i + 1 + ")  " + perso[i],
           break: 1,
-         //bullet: {level: 0},
+          //bullet: {level: 0},
         })
-      )
+      );
     }
     return cf;
   }
-
-
-
-
-
-
-
 }
 
 export default DocData;

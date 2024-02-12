@@ -184,6 +184,7 @@ export default {
               docData.getHL(),
 
               docData.LineBreak(),
+              docData.pageBreak(docjs),
               exppro.getSubTitle("Expériences professionnelles"),
               docData.LineBreak(),
               exppro.getExpPro(docjs.experiencesPro),
@@ -235,7 +236,7 @@ export default {
         ],
       });
       //doc.add(docData.getSubTitle("Outils"));
-      doc.addSection({
+    /*  doc.addSection({
         children: [
           new Paragraph({
             children: [
@@ -244,7 +245,7 @@ export default {
             ],
           }),
         ],
-      });
+      });*/
       // To export into a .docx file
       this.saveDocumentToFile(doc, `vuedoc.docx`);
       this.savetoPdf(doc);
