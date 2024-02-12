@@ -1,37 +1,30 @@
 import { Paragraph, TextRun, ImageRun, AlignmentType, HeadingLevel, Tab, } from "docx";
+import enumImg from "../_helpers/enum-Img";
+import docData from "./tools/DocData";
 class cComps {
   static getComp(funcs) {
     const cf = new Paragraph({
       children: [],
     });
-    cf.addChildElement(this.LineBreak());
+    cf.addChildElement(docData.LineBreakTR());
     for (var i = 0; i < funcs.length; i++) {
-      cf.addChildElement(this.getBulletImg());
+      cf.addChildElement(docData.getBulletImg(enumImg.Comp));//bullet
         cf.addChildElement(
           new TextRun({
             text: "       " + funcs[i],//7 spaces
             alignment: AlignmentType.LEFT,
             size: 22,
           }));
-        cf.addChildElement(this.LineBreak());
+        cf.addChildElement(docData.LineBreakTR());
     }
     return cf;
-  }
-  static LineBreak() {
-    return new TextRun({
-      text: "",
-      break: 1,
-    });
-  }
-  static async urlToBlob(url) {
-    return (await fetch(url)).blob();
   }
   static getSubTitle(txt) {
     return new Paragraph({
       children: [
         new ImageRun({
           type: "png",
-          data: this.urlToBlob("https://raw.githubusercontent.com/proxydc/Templates/main/comp.png"),
+          data: docData.urlToBlob(enumImg.Titlecomp),
           transformation: {
             width: 35,
             height: 35,
@@ -53,15 +46,7 @@ class cComps {
       ],
     });
   }
-  static getBulletImg() {
-    return new ImageRun({
-      type: "png",
-      data: this.urlToBlob("https://raw.githubusercontent.com/proxydc/Templates/main/bullet.png"),
-      transformation: {
-        width: 5,
-        height: 5,
-      },
-    });
-  }
+ 
 }
 export default cComps;
+

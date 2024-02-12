@@ -1,4 +1,6 @@
 import { Paragraph, TextRun, ImageRun, AlignmentType, HeadingLevel } from "docx";
+import enumImg from "../_helpers/enum-Img.js";
+import docData from "./tools/DocData";
 class cBref {
   static async urlToBlob(url) {
     return (await fetch(url)).blob();
@@ -8,7 +10,7 @@ class cBref {
       children: [
         new ImageRun({
           type: "png",
-          data: this.urlToBlob("https://raw.githubusercontent.com/proxydc/Templates/main/bref.png"),
+          data: docData.urlToBlob(enumImg.Bref),
           transformation: {
             width: 35,
             height: 35,
