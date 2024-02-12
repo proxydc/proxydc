@@ -87,7 +87,7 @@ const xpAddedCounter = ref(0);
             <div class="col">
               <label for="">Compétences/ Tâches</label>
               <div v-bind:id="`taskxp${index}`">
-                <input v-for="(task, index) in experience.tasks" :value="task" :key="index" class="form-control dc-vlist"
+                <input v-for="(task, index) in experience.tasks" :value="task" :key="index" class="form-control dc-vlist" :maxlength="maxILength" 
                   type="text" />
               </div>
               <button class="btn btn-outline-primary btn-sm" @click="addRowTaskXp(`${index}`, maxILength)">
