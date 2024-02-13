@@ -3,6 +3,12 @@
     <div v-if="error != ''" class="alert alert-danger alert-dismissible fade show">
       <strong>{{ error }}</strong>
     </div>
+    <div v-if="warning != ''" class="alert alert-warning alert-dismissible fade show">
+      <strong>{{ warning }}</strong>
+    </div>
+    <div v-if="success != ''" class="alert alert-success alert-dismissible fade show">
+      <strong>{{ success }}</strong>
+    </div>
     <div class="d-flex gap-2 py-3">
       <button type="button" class="btn btn-outline-primary" @click="openAddAccount()">
         Nouveau account
@@ -56,6 +62,8 @@ export default {
     return {
       AcRows: [],
       error: "",
+      warning: "",
+      success: "",
     };
   },
   mounted() {
@@ -70,29 +78,55 @@ export default {
   },
   methods: {
     getLogins() {
-      const url = urlacc.getLoginUrl();
-      axios.get(url).then(res => {
-        console.log(res.data);
-        this.AcRows = res.data;
-        $(document).ready(function () {
-          $('#admintable').DataTable();
+      try {
+        const url = urlacc.getLoginUrl();
+        axios.get(url).then(res => {
+          console.log(res.data);
+          switch (res.status) {
+            case 200:
+              this.AcRows = res.data;
+              $(document).ready(function () { $('#admintable').DataTable(); });
+              break;
+            default:
+              this.error = "Database error! Status: " + result.status + " Error: " + result.data;
+              break;
+          }
         });
-      });
+      }
+      catch (err) {
+        this.error = err;
+      }
     },
     openAddAccount() {
       this.$router.push({ name: "AddAccount" });
     },
     deleteAccount(accountId) {
-      if (confirm('Are you sure, you want to delete this account. Account Id: ' + accountId)) {
-        const url = urlacc.getEditDelAccUrl(accountId);
-        axios.delete(url).then(res => {
-          console.log(res.data);
-          this.getLogins();
-        }).catch(function (err) {
-          if (err.response) {
-            this.error = err.response.data.errors;
-          }
-        });
+      try {
+        if (confirm('Are you sure, you want to delete this account. Account Id: ' + accountId)) {
+          const url = urlacc.getEditDelAccUrl(accountId);
+          axios.delete(url).then(res => {
+            console.log(res.data);
+            switch (res.status) {
+              case 200:
+                this.getLogins();
+                this.success = res.data;
+                break;
+              case 202:
+                this.warning = res.data;
+                break;
+              default:
+                this.error = "Database error! Status: " + result.status + " Error: " + result.data;
+                break;
+            }
+          }).catch(function (err) {
+            if (err.response) {
+              this.error = err.response;
+            }
+          });
+        }
+      }
+      catch (err) {
+        this.error = err;
       }
     },
     editAccount(accountId) {

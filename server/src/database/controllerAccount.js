@@ -16,7 +16,7 @@ const getAuthentification = (req, res) => {
         if (!noAccountFound) {
           res.status(200).json(results.rows[0]["role_id"]);
         } else {
-          res.status(203).json("Login failed");
+          res.status(202).json("Login failed");
         }
       } catch (err) {
         console.log("catch: " + err);
@@ -64,10 +64,10 @@ const addAccount = (req, res) => {
           queries.addAccount,
           [login_name, display_name, pass_word, role_id],
           (error, results) => {
-            try{
-            if (error) throw error;
-            res.status(201).send("Account created Successfully!");
-            }catch(err){
+            try {
+              if (error) throw error;
+              res.status(201).send("Account created Successfully!");
+            } catch (err) {
               res.status(203).json({ error: "Error Database! " + err });
             }
           }
@@ -89,10 +89,10 @@ const deleteAccountById = (req, res) => {
         res.status(202).json("Account does not exist in the database");
       } else {
         pool.query(queries.deleteAccountById, [id], (error, results) => {
-          try{
-          if (error) throw error;
-          res.status(200).send("Account deleted Successfully!");
-          }catch(err){
+          try {
+            if (error) throw error;
+            res.status(200).send("Account id: " + id + " deleted Successfully!");
+          } catch (err) {
             res.status(203).json({ error: "Error Database! " + err });
           }
         });
@@ -117,10 +117,10 @@ const updateAccount = (req, res) => {
           queries.updateAccount,
           [id, display_name, pass_word, role_id],
           (error, results) => {
-            try{
-            if (error) throw error;
-            res.status(201).send("Account updated Successfully!");
-            }catch(err){
+            try {
+              if (error) throw error;
+              res.status(201).send("Account updated Successfully!");
+            } catch (err) {
               res.status(203).json({ error: "Error Database! " + err });
             }
           }
