@@ -93,11 +93,12 @@ class cExpPerso {
           cf.addChildElement(
             new TextRun({
               text: "       " + pros[i].tasks[j], //7 spaces,
-              break: 1,
+              alignment: AlignmentType.LEFT,
+              size: 22,
             })
           );
-        }
-        cf.addChildElement(docData.LineBreakTR());
+          cf.addChildElement(docData.LineBreakTR());
+        }       
         cf.addChildElement(docData.LineBreakTR());
       }
       return cf;
