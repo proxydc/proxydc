@@ -37,7 +37,8 @@ CREATE TABLE dc(
     email VARCHAR(256) NOT NULL,
     dc_status INT REFERENCES dc_status (id), -- Default = 2 ?
     tags VARCHAR(256),
-    document JSONB NULL
+    document JSONB NULL,
+    manager_id INTEGER NOT NULL
 );
 update dc
 set document = jsonb_set(document, '{}', '{

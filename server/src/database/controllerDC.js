@@ -16,6 +16,19 @@ const getDCs = (req, res) => {
   });
 };
 //get-200
+const getDCsByManagerID = (req, res) => {
+  const id = req.params.id;
+  pool.query(queries.getDCsByManagerID, [id], (error, results) => {
+    try {
+      if (error) throw error;
+      res.status(200).json(results.rows);
+    } catch (err) {
+      console.log("catch: " + err);
+      res.status(203).json({ error: "Error Database! " + err });
+    }
+  });
+};
+//get-200
 const getDCById = (req, res) => {
   const id = req.params.id;
   pool.query(queries.getDCById, [id], (error, results) => {
@@ -73,7 +86,7 @@ const getAllDcStatus = (req, res) => {
 
 //post 201
 const addDC = (req, res) => {
-  const { familyname, firstname, email } = req.body;
+  const { familyname, firstname, email, manager_id } = req.body;
   try {
     //check if DC exists
     pool.query(queries.checkDCExists, [email], (error, results) => {
@@ -90,7 +103,7 @@ const addDC = (req, res) => {
           );
           pool.query(
             queries.addDC,
-            [familyname, firstname, email, dcStatus, initialDocument],
+            [familyname, firstname, email, dcStatus, initialDocument, manager_id],
             (error, results) => {
               try {
                 if (error) throw error;
@@ -200,6 +213,7 @@ const updateDCByAdmin = (req, res) => {
 
 module.exports = {
   getDCs,
+  getDCsByManagerID,
   getDCById,
   getDCByIdCandidat,
   getDCDocById,

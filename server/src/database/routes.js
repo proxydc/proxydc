@@ -11,6 +11,7 @@ router.delete("/account/:id", controller.deleteAccountById);
 
 
 router.get("/dc", controllerDC.getDCs);
+router.get("/dcByManager/:id", controllerDC.getDCsByManagerID);
 router.post("/dc/add", controllerDC.addDC);
 router.get("/dc/:id", controllerDC.getDCById);
 router.get("/dc/candidat/:id", controllerDC.getDCByIdCandidat);

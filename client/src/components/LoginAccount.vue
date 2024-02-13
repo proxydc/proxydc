@@ -71,7 +71,9 @@ export default {
               "token",
               "hdsfhqishiofhiqsdhfhdksqhfklmqjdmsfjildjsfioj7467d687dfsgnjklfhnglk46396fdgnlkjndflkg646346drg,fkldjg"
             );
-            if (resp == 1) {
+            localStorage.setItem("manager_id", resp.manager_id)
+            alert("manager_id: "+ resp.manager_id + " role_id: "+resp.role_id);
+            if (resp.role_id == 1) {
               localStorage.setItem("useraccount", "admin");
               this.$router.push({ name: "admin" });
             } else {

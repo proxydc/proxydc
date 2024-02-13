@@ -23,6 +23,7 @@
             <th scope="col">Email</th>
             <th scope="col">Status</th>
             <th scope="col">Tags</th>
+            <th scope="col">Manager</th>
             <th scope="col">Actions</th>
           </tr>
         </thead>
@@ -33,6 +34,7 @@
             <td class="text-start">{{ acRow.email }}</td>
             <td class="text-start">{{ acRow.status_name }}</td>
             <td class="text-start">{{ acRow.tags }}</td>
+            <td class="text-start">{{ acRow.manager_name }}</td>
             <td>
               <a class="btn btn-success mx-2" :href="'/#/editDC/' + acRow.id">
                 Edit
@@ -85,6 +87,7 @@ export default {
     getDCs() {
       try {
         const url = urldc.getDcsUrl();
+        alert("url: "+url);
         axios.get(url).then((res) => {
           console.log(res.data);
           switch (res.status) {

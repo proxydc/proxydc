@@ -14,7 +14,7 @@ const getAuthentification = (req, res) => {
         const noAccountFound = !results.rows.length;
         console.log("acc: " + noAccountFound);
         if (!noAccountFound) {
-          res.status(200).json(results.rows[0]["role_id"]);
+          res.status(200).json({role_id: results.rows[0]["role_id"], manager_id: results.rows[0]["id"]});
         } else {
           res.status(202).json("Login failed");
         }
