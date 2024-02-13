@@ -76,9 +76,12 @@ export default {
         .get(url)
         .then((res) => {
           console.log(res.data);
-          this.model.candidat = res.data[0];
-        })
-        .catch(function (err) {
+          if (res.status == 200)
+            this.model.candidat = res.data[0];
+          if (res.status == 203) {
+            this.error = res.data;
+          }
+        }).catch(function (err) {
           if (err.response) {
             this.error = err.response.data.errors;
           }
@@ -86,7 +89,6 @@ export default {
     },
 
     async updateCandidat() {
-      alert("status: " + this.model.candidat.dc_status);
       try {
         const url = urldc.getDcAdminUrl(this.model.candidat.id);
         let result = await axios.put(url, {
@@ -97,8 +99,15 @@ export default {
           tags: this.model.candidat.tags,
         });
         console.log(result);
-        if (result.status == 201) {
-          this.$router.push({ name: "user" });
+        switch (result.status) {
+          case 201:
+            this.$router.push({ name: 'user' })
+            break;
+          case 202:
+          case 203:
+          default:
+            this.error = result.data;
+            break;
         }
       } catch (err) {
         this.error = err.errors;

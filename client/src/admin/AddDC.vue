@@ -3,7 +3,7 @@
     <div v-if="error != ''" class="alert alert-danger alert-dismissible fade show">
       <strong>{{ error }}</strong>
     </div>
-    <div v-if="warning != ''" class="alert alert-info alert-dismissible fade show">
+    <div v-if="warning != ''" class="alert alert-warning alert-dismissible fade show">
       <strong>{{ warning }}</strong>
     </div>
     <h1>Add Candidat</h1>
@@ -58,6 +58,8 @@ export default {
   methods: {
     async addDC() {
       try {
+        this.error = "";
+        this.warning = "";
         const url = urldc.getAddDcUrl();
         let result = await axios.post(url, {
           familyname: this.model.dc.familyname,
@@ -65,14 +67,17 @@ export default {
           email: this.model.dc.email,
         });
         console.log(result);
-        if (result.status == 201) {
-          this.$router.push({ name: 'user' })
-        }
-        if (result.status == 203) {
-          this.error = result.data;
-        }
-        if (result.status == 202) {
-          this.warning = result.data;
+        switch (result.status) {
+          case 201:
+            localStorage.setItem("user-info", JSON.stringify(result.data))
+            this.$router.push({ name: 'user' });
+            break;
+          case 202:
+            this.warning = result.data;
+            break;
+          default:
+            this.error = "Database error! Status: " + result.status + " Error: " + result.data;
+            break;
         }
       }
       catch (err) {
