@@ -43,6 +43,29 @@ class cExpPro {
         cf.addChildElement(docData.getSubTitle1("Expérience " + (i + 1)));
         cf.addChildElement(docData.LineBreakTR());
         cf.addChildElement(docData.LineBreakTR());
+/*
+  cf.addChildElement(
+          new TextRun({
+            text: pros[i].title,
+            bold: true,
+            alignment: AlignmentType.LEFT,
+            size: 26,
+            allCaps: true,
+            break: 1
+          })
+        );
+        cf.addChildElement(docData.LineBreakTR());
+        cf.addChildElement(
+          new TextRun({
+            text: "  De: " + pros[i].start + "    A: " + pros[i].end,
+            alignment: AlignmentType.RIGHT,
+            size: 22,
+            smallCaps: true,
+            bold: true,
+          })
+        );
+*/
+
         cf.addChildElement(docData.getSubTitle2("Période"));
         cf.addChildElement(
           new TextRun({
