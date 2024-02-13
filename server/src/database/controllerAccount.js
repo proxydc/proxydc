@@ -56,9 +56,11 @@ const addAccount = (req, res) => {
   //check if login name exists
   pool.query(queries.checkLoginExists, [login_name], (error, results) => {
     try {
+      if (error) throw error;
       if (results.rows.length) {
         res.status(202).json("Login already exists.");
-      } else {
+      } 
+      else {
         //add account to db
         pool.query(
           queries.addAccount,

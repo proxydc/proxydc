@@ -102,6 +102,9 @@ export default {
     },
     deleteAccount(accountId) {
       try {
+        this.success = "";
+        this.warning = "";
+        this.error = "";
         if (confirm('Are you sure, you want to delete this account. Account Id: ' + accountId)) {
           const url = urlacc.getEditDelAccUrl(accountId);
           axios.delete(url).then(res => {
