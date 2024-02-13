@@ -1,6 +1,6 @@
 <template>
     <div>
-        ********* Félicitations, vous avez bien validé votre dossier des compétences! ***********
+        ********* Félicitations, vous avez bien validé votre dossier de compétences! ***********
     </div>
 </template>
 

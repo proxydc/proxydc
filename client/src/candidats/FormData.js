@@ -2,36 +2,10 @@ import urldc from "../_helpers/urllist.js";
 import axios from "axios";
 
 class FormData {
-    /*static get(id) {
-
-        return http.get(`/dc/${id}`);
-    }
-
-    static getDCURL(id) {
-        return http + `dc/${id}`;
-    }
-
-    static getDC(dcid) {
-        try {
-            const url = `dc/${dcid}`;
-            alert("url: " + url);
-            http.get(url).then(res => {
-                console.log(res.data)
-                return res.data
-            }).catch(function (err) {
-                return err
-            });
-        }
-        catch (err) {
-            throw err;
-        }
-    }*/
     static save(id, dc, document, status) {
         try {
-            alert("id: "+id+ " dc: "+dc)
             let generatedDocumentObj = this.getDocumentObject(dc, document);
             this.updateDC(id, generatedDocumentObj, status);
-            alert("Updated document successfully!");
         }
         catch (err) {
             throw err;
@@ -47,9 +21,10 @@ class FormData {
                 document: generatedDoc,
             });
             console.warn(result);
-            if (result.status == 200) {
+            if (result.status == 201) {
                 alert(result.data);
             }
+            else { throw result; }
         }
         catch (err) {
             throw err;
@@ -59,7 +34,7 @@ class FormData {
     static getDocumentObject(dc, document) {
 
         /* Comp fonctionnelles */
-       // alert("iam in functional");
+        // alert("iam in functional");
         var domNodes = document.querySelectorAll("#fonct input");
         var nodes = [...domNodes];
         dc.functionalAbilities = nodes.map((x) => x.value).filter(function (i) { return i.trim() != ""; });
@@ -124,8 +99,7 @@ class FormData {
                 technical_env: technicalenvValue,
                 tasks: taskValues
             };
-            if(currentExperience.start!='')
-            {
+            if (currentExperience.start != '') {
                 experiencesPro.push(currentExperience)
             }
         }
@@ -159,11 +133,10 @@ class FormData {
                 technical_env: technicalenvValue,
                 tasks: taskValues
             };
-            if(currentProject.period!='')
-            {
+            if (currentProject.period != '') {
                 personalProjects.push(currentProject)
             }
-            
+
             console.log("document curr projects values: " + currentProject.period);
         }
 

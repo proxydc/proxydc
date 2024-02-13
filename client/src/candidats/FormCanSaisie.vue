@@ -251,7 +251,7 @@ export default {
           if (res.status == 200) {
             this.form = res.data;
           }
-          if (res.status == 202) {
+          else{
             this.$router.push({ name: "NotFound" });
           }
         });
@@ -269,7 +269,7 @@ export default {
           document,
           enumDcStatus.Saisie_Encours
         );
-        location.reload();
+        location.reload();        
       } catch (err) {
         this.errormsg = err;
       }
