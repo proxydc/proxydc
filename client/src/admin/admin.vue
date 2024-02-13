@@ -68,7 +68,6 @@ export default {
   },
   mounted() {
     try {
-
       this.getLogins();
       console.log("data: " + this.AcRows);
     }

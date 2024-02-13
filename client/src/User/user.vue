@@ -3,6 +3,12 @@
     <div v-if="error != ''" class="alert alert-danger alert-dismissible fade show">
       <strong>{{ error }}</strong>
     </div>
+    <div v-if="warning != ''" class="alert alert-warning alert-dismissible fade show">
+      <strong>{{ warning }}</strong>
+    </div>
+    <div v-if="success != ''" class="alert alert-success alert-dismissible fade show">
+      <strong>{{ success }}</strong>
+    </div>
     <div class="d-flex gap-2 py-3">
       <button type="button" class="btn btn-outline-primary" @click="openAddDC()">
         Nouveau candidat
@@ -63,59 +69,93 @@ export default {
     return {
       AcRows: [],
       error: "",
+      warning: "",
+      success: "",
     };
   },
   mounted() {
     try {
       this.getDCs();
       console.log("data: " + this.AcRows);
-
     } catch (err) {
       this.error = err.message;
     }
   },
   methods: {
     getDCs() {
-      const url = urldc.getDcsUrl();
-      axios.get(url).then((res) => {
-        console.log(res.data);
-        this.AcRows = res.data;
-        $(document).ready(function () {
-          $('#usertable').DataTable();
+      try {
+        const url = urldc.getDcsUrl();
+        axios.get(url).then((res) => {
+          console.log(res.data);
+          switch (res.status) {
+            case 200:
+              this.AcRows = res.data;
+              $(document).ready(function () { $('#usertable').DataTable(); });
+              break;
+            default:
+              this.error = "Database error! Status: " + result.status + " Error: " + result.data;
+              break;
+          }
         });
-      });
+      }
+      catch (err) {
+        this.error = err;
+      }
     },
     openAddDC() {
       this.$router.push({ name: "AddDC" });
     },
     deleteDC(dcId) {
-      alert("DC: " + dcId);
-      if (confirm("Are you sure, you want to delete this dc. DC Id: " + dcId)) {
-        const url = urldc.getDelDcUrl(dcId);
-        alert("url: " + url);
-        axios
-          .delete(url)
-          .then((res) => {
+      try {
+        this.success = "";
+        this.warning = "";
+        this.error = "";
+        if (confirm("Are you sure, you want to delete this dc. DC Id: " + dcId)) {
+          const url = urldc.getDelDcUrl(dcId);
+          axios.delete(url).then(res => {
             console.log(res.data);
-            this.getDCs();
-          })
-          .catch(function (err) {
+            switch (res.status) {
+              case 200:
+                this.getDCs();
+                this.success = res.data;
+                break;
+              case 202:
+                this.warning = res.data;
+                break;
+              default:
+                this.error = "Database error! Status: " + result.status + " Error: " + result.data;
+                break;
+            }
+          }).catch(function (err) {
             if (err.response) {
               this.error = err.response.data.errors;
             }
           });
+        }
+      }
+      catch (err) {
+        this.error = err;
       }
     },
     goToDC(dcId) {
-      alert("DC: " + dcId);
-      let self = this;
-      self.$router.push(`/formCandidatSaisie/${dcId}`);
+      try {
+        let self = this;
+        self.$router.push(`/formCandidatSaisie/${dcId}`);
+      }
+      catch (err) {
+        this.error = err;
+      }
     },
     CopyUrl(id) {
-      const siteurl = process.env.NODE_ENV == 'production' ? process.env.VUE_APP_SITEURLPROD : process.env.VUE_APP_SITEURLDEV;     
-      console.log("siteurl: "+ siteurl + process.env.NODE_ENV)
-      var content = siteurl + "/#/formCandidatSaisie/" + id;
-      navigator.clipboard.writeText(content);
+      try {
+        const siteurl = process.env.NODE_ENV == 'production' ? process.env.VUE_APP_SITEURLPROD : process.env.VUE_APP_SITEURLDEV;
+        console.log("siteurl: " + siteurl + process.env.NODE_ENV)
+        var content = siteurl + "/#/formCandidatSaisie/" + id;
+        navigator.clipboard.writeText(content);
+      }
+      catch (err) {
+        this.error = err;
+      }
     },
   },
 };
