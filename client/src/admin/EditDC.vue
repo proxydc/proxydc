@@ -19,11 +19,17 @@
           <input type="text" id="lbtags" v-model="model.candidat.tags" placeholder="Enter tags" class="form-control" />
           <label for="lbstatus">Status:</label>
           <div style="overflow:hidden;">
-            <select class="selectpicker show-tick" v-model="model.candidat.dc_status" id="lbstatus">
+            <!--<select class="selectpicker show-tick" v-model="model.candidat.dc_status" id="lbstatus">
               <option v-bind:value="1">Initialisé</option>
               <option v-bind:value="2">Saisie Encours</option>
               <option v-bind:value="3">Finalisé</option>
               <option v-bind:value="4">Terminé</option>
+            </select> 
+            <select name="name" class="form-control" v-model="model.candidat.dc_status">
+              <option v-for="stadc in DcStatusEnum" :value="stadc">{{ stadc }}</option>
+            </select>-->
+            <select name="name" class="selectpicker show-tick" v-model="model.candidat.dc_status">
+              <option v-for="stadc in DcStatusList" :value="stadc.value">{{ stadc.text }}</option>
             </select>
           </div>
           <br />
@@ -41,11 +47,19 @@
 import axios from "axios";
 import urldc from "../_helpers/urllist.js";
 import $ from "jquery";
+import DcStatusEnum from "../_helpers/enum-dcStatus";
 export default {
   name: "EditCandidat",
   data() {
     return {
       error: "",
+      DcStatusEnum,
+      DcStatusList: [
+        { value: 1, text: "Initialisé" },
+        { value: 2, text: "Saisie_Encours" },
+        { value: 3, text: "Finalisé" },
+        { value: 4, text: "Terminé" },
+      ],
       model: {
         candidat: {
           id: { type: String, required: true },

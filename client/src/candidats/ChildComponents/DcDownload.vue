@@ -221,7 +221,7 @@ export default {
         ],
       });*/
       // To export into a .docx file
-      this.saveDocumentToFile(doc, `vuedoc.docx`);
+      this.saveDocumentToFile(doc, `vuedoc.pdf`);
       this.savetoPdf(doc);
 
     },
