@@ -233,7 +233,7 @@ class DocData {
       docjs.technicalAbilities.length +
       docjs.certifications.length +
       docjs.languages.length;
-    alert("nblines: " + lines);
+   // alert("nblines: " + lines);
     if (lines < 14 && lines > 8) {
       return new Paragraph({
         text: "",

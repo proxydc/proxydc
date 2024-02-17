@@ -87,7 +87,7 @@ export default {
     getDCs() {
       try {
         const url = urldc.getDcsUrl();
-        alert("url: "+url);
+       // alert("url: "+url);
         axios.get(url).then((res) => {
           console.log(res.data);
           switch (res.status) {

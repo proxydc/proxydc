@@ -34,7 +34,7 @@ class cExpPro {
     });
   }
   static getExpPro(pros) {
-    alert("len: " + pros.length);
+    //alert("len: " + pros.length);
     if (pros.length > 0) {
       const cf = new Paragraph({
         children: [],

@@ -66,7 +66,7 @@ export default {
     createDoc() {
       try {
         const url = urldc.getDcDocUrl(this.documentId);
-        alert("urldc: " + url);
+        //alert("urldc: " + url);
         axios.get(url).then((res) => {
           console.log("docdata: " + res);
           this.dbDoc = res.data;
@@ -221,7 +221,7 @@ export default {
         ],
       });*/
       // To export into a .docx file
-      this.saveDocumentToFile(doc, `vuedoc.pdf`);
+      this.saveDocumentToFile(doc, `vuedoc.docx`);
       this.savetoPdf(doc);
 
     },
