@@ -221,7 +221,15 @@ export default {
         ],
       });*/
       // To export into a .docx file
-      this.saveDocumentToFile(doc, `vuedoc.docx`);
+      var filen =
+        "DossierCompetences-" +
+        docjs.familyname +
+        "-" +
+        docjs.firstname +
+        "-" +
+        new Date().toLocaleString() +
+        ".docx";
+      this.saveDocumentToFile(doc, filen); //`vuedoc.docx`);
       this.savetoPdf(doc);
 
     },
