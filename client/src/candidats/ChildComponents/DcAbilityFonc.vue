@@ -24,14 +24,6 @@
 
 <script>
 export default {
- /* data() {
-    return {
-      uid: "",
-      titile: "",
-      functionalAbilities: [],
-      error: "",
-    };
-  },*/
   props: {
     title: {
       type: String,
@@ -49,9 +41,6 @@ export default {
       required: true,
     },
   },
- /* defineEmits:{
-    (['update:abilities'])
-  },*/
   methods: {
     addRow(len) {
       var container = document.getElementById("fonct");

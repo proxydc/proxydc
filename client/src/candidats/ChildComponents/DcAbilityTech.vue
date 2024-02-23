@@ -23,14 +23,6 @@
 
 <script>
 export default {
- /* data() {
-    return {
-      uid: "",
-      titile: "",
-      functionalAbilities: [],
-      error: "",
-    };
-  },*/
   props: {
     title: {
       type: String,

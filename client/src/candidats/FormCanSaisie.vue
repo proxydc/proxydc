@@ -235,14 +235,6 @@ export default {
     }
   },
   methods: {
-    /*focusnext(e) {
-      const inputs = array.from(e.target.form.queryselectorall('input[type="text"]'));
-      const index = inputs.indexof(e.target);
-
-      if (index < inputs.length) {
-        inputs[index + 1].focus();
-      }
-    },*/
     getDC(id) {
       try {
         const url = urldc.getDcUrl(id);
