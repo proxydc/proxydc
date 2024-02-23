@@ -204,7 +204,6 @@ export default {
               docData.getHL(),
             ],
           },
-          
         ],
       });
       //doc.add(docData.getSubTitle("Outils"));
