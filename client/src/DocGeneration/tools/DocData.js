@@ -1,32 +1,125 @@
 const FileSaver = require("file-saver");
 import enumImg from "../../_helpers/enum-Img.js";
+import { compareDesc } from 'date-fns'
 import {
     Header,
     ImageRun,
     AlignmentType,
-    Document,
     HeadingLevel,
-    Packer,
     Paragraph,
     Tab,
-    TabStopPosition,
-    TabStopType,
     TextRun,
     HorizontalPositionAlign,
     VerticalPositionAlign,
     ExternalHyperlink,
     PageNumber,
-    FrameAnchorType,
     ShadingType,
     Hyperlink,
+    Footer,
 } from "docx";
 
 class DocData {
-    static getHeader(nom, prenom) {
+    static getFirstPageHeader(docjs) {
+        return new Header({
+            // The header on first page when the 'Different First Page' option is activated
+            children: [
+                this.getHeader(docjs.familyname, docjs.firstname, docjs.experiencesPro),
+                this.getBufferLogo1stPage(),
+            ],
+            /*background: {
+                            color: '#cde3d8',
+                        },*/
+        });
+    }
+    static getDefaultPageHeader(docjs) {
+        return new Header({
+            // The standard default header on every page or header on odd pages when the 'Different Odd & Even Pages' option is activated
+            children: [
+                this.getHeader(docjs.familyname, docjs.firstname, docjs.experiencesPro),
+                this.getBufferLogo(),
+                //docData.getHL(),
+            ],
+        });
+    }
+    static getDefaultPageFooter(docjs) {
+        return new Footer({
+            // The standard default footer on every page or footer on odd pages when the 'Different Odd & Even Pages' option is activated
+            children: [
+                this.getFooterC(docjs.familyname, docjs.firstname),
+                this.LineBreak(),
+                this.LineBreak(),
+
+                //docData.getFooterL(),
+                this.getPageNumber(),
+            ],
+        });
+    }
+    static getFirstPageFooter(docjs) {
+        return new Footer({
+            // The footer on first page when the 'Different First Page' option is activated
+            children: [
+                this.getFooterC(docjs.familyname, docjs.firstname),
+                this.LineBreak(),
+                this.LineBreak(),
+                //docData.getFooterL(),
+                //docData.getFooterR(),
+                this.getPageNumber(),
+            ],
+        });
+    }
+    static getYearDiffWithMonth(startDate, endDate) {
+        const ms = endDate.getTime() - startDate.getTime();
+
+        const date = new Date(ms);
+
+        return Math.abs(date.getUTCFullYear() - 1970);
+    }
+    static getDiffDays(startDate, endDate) {
+        let ms = endDate.getTime() - startDate.getTime();
+        return Math.round(ms / (1000 * 3600 * 24));
+    }
+    static getPosteAndExps(exp) {
+        if (exp != "" && exp != null && exp.length > 0) {
+            let temp = exp.sort(function(a, b) {
+                let dateA = new Date(a.start);
+                let dateB = new Date(b.start);
+                return compareDesc(dateA - dateB);
+            });
+            let poste = temp[0].title.trim();
+            let nbyears = 0;
+            let days = 0;
+            temp.forEach((element) => {
+                /* nbyears += this.getYearDiffWithMonth(
+                     new Date(element.start),
+                     new Date(element.end)
+                 );*/
+                days += this.getDiffDays(new Date(element.start),
+                    new Date(element.end))
+            });
+            nbyears = Math.round(days / 365)
+            if (nbyears > 0)
+                return poste + " (" + nbyears + " années d’expériences)";
+            return poste;
+            /* if (nbyears > 0)
+                 return poste + " (" + nbyears + " années d’expériences)" + Math.round(days / 365);
+             return poste;*/
+        }
+        return "";
+    }
+    static getHeader(nom, prenom, exp) {
         return new Paragraph({
             children: [
                 new TextRun({
-                    text: nom + " " + prenom,
+                    text: "       " + nom + " " + prenom,
+                    bold: true,
+                    alignment: AlignmentType.CENTER,
+                }),
+                new TextRun({
+                    text: "",
+                    break: 1,
+                }),
+                new TextRun({
+                    text: this.getPosteAndExps(exp),
                     bold: true,
                     alignment: AlignmentType.CENTER,
                 }),
@@ -50,10 +143,8 @@ class DocData {
                     transformation: {
                         width: 120,
                         height: 54,
-                        /*position: absolute,
-                        top: 0,
-                        right: 0,*/
                     },
+
                     floating: {
                         horizontalPosition: {
                             align: HorizontalPositionAlign.RIGHT,
@@ -64,6 +155,10 @@ class DocData {
                     },
                 }),
             ],
+            /* spacing: {
+                 before: 100,
+                 after: 100,
+             }*/
         });
     }
     static getBufferLogo() {
@@ -76,8 +171,8 @@ class DocData {
                         width: 100,
                         height: 80,
                         /*position: absolute,
-                        top: 0,
-                        right: 0,*/
+                                                            top: 0,
+                                                            right: 0,*/
                     },
                     floating: {
                         horizontalPosition: {
@@ -119,13 +214,13 @@ class DocData {
             ],
             alignment: AlignmentType.RIGHT,
             /*floating: {
-              horizontalPosition: {
-                align: HorizontalPositionAlign.RIGHT,
-              },
-              verticalPosition: {
-                align: VerticalPositionAlign.BOTTOM,
-              },
-            },*/
+                                horizontalPosition: {
+                                  align: HorizontalPositionAlign.RIGHT,
+                                },
+                                verticalPosition: {
+                                  align: VerticalPositionAlign.BOTTOM,
+                                },
+                              },*/
         });
     }
     static getFooterC(nom, prenom) {
@@ -221,7 +316,6 @@ class DocData {
         });
     }
 
-
     static getBulletImg(url) {
         return new ImageRun({
             type: "png",
@@ -251,6 +345,12 @@ class DocData {
         return "";
     }
 
+    static pageBreak() {
+        return new Paragraph({
+            text: "",
+            pageBreakBefore: true,
+        });
+    }
 
     static getLine(col, text) {
         return new Paragraph({
@@ -296,6 +396,9 @@ class DocData {
             break: 1,
         });
     }
+    static GetBlankBorder() {
+        return 'top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" }, bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" }, left: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" }, right: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },';
+    }
     static LineBreak() {
         return new Paragraph({
             children: [
@@ -322,8 +425,6 @@ class DocData {
         });
     }
 
-
-
     static getHyperLink(txt, urllink) {
             return new Paragraph({
                 children: [
@@ -340,13 +441,13 @@ class DocData {
             });
         }
         /*static getBulletPoint(txt, lvl) {
-          return new Paragraph({
-            text: txt,
-            bullet: {
-              level: lvl, // How deep you want the bullet to be. Maximum level is 9
-            },
-          });
-        }*/
+                            return new Paragraph({
+                              text: txt,
+                              bullet: {
+                                level: lvl, // How deep you want the bullet to be. Maximum level is 9
+                              },
+                            });
+                          }*/
     static getSubTitle1(txt) {
         return new TextRun({
             text: txt,
@@ -369,7 +470,6 @@ class DocData {
             color: "#008cba",
         });
     }
-
 }
 
 export default DocData;
