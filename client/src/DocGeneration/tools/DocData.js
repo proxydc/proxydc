@@ -45,9 +45,10 @@ class DocData {
         return new Footer({
             // The standard default footer on every page or footer on odd pages when the 'Different Odd & Even Pages' option is activated
             children: [
+                this.LineBreak(),
                 this.getFooterC(docjs.familyname, docjs.firstname),
                 this.LineBreak(),
-                this.LineBreak(),
+                //this.LineBreak(),
 
                 //docData.getFooterL(),
                 this.getPageNumber(),
@@ -58,9 +59,10 @@ class DocData {
         return new Footer({
             // The footer on first page when the 'Different First Page' option is activated
             children: [
+                this.LineBreak(),
                 this.getFooterC(docjs.familyname, docjs.firstname),
                 this.LineBreak(),
-                this.LineBreak(),
+                //this.LineBreak(),
                 //docData.getFooterL(),
                 //docData.getFooterR(),
                 this.getPageNumber(),
@@ -168,7 +170,7 @@ class DocData {
                     type: "png",
                     data: this.urlToBlob(enumImg.Logo1),
                     transformation: {
-                        width: 100,
+                        width: 80,
                         height: 80,
                         /*position: absolute,
                                                             top: 0,
@@ -213,60 +215,10 @@ class DocData {
                 }),
             ],
             alignment: AlignmentType.RIGHT,
-            /*floating: {
-                                horizontalPosition: {
-                                  align: HorizontalPositionAlign.RIGHT,
-                                },
-                                verticalPosition: {
-                                  align: VerticalPositionAlign.BOTTOM,
-                                },
-                              },*/
         });
     }
     static getFooterC(nom, prenom) {
         return new Paragraph({
-            /* frame: {
-        position: {
-            x: -100,
-            y: 20000,
-        },
-        width: 4000,
-        height: 10,
-        anchor: {
-            horizontal: FrameAnchorType.MARGIN,
-            vertical: FrameAnchorType.MARGIN,
-        },
-        alignment: {
-            x: HorizontalPositionAlign.CENTER,
-            y: VerticalPositionAlign.BOTTOM,
-        },
-    },
-    border: {
-        top: {
-            color: "auto",
-            space: 1,
-            value: "single",
-            size: 6,
-        },
-        bottom: {
-            color: "auto",
-            space: 1,
-            value: "single",
-            size: 6,
-        },
-        left: {
-            color: "auto",
-            space: 1,
-            value: "single",
-            size: 6,
-        },
-        right: {
-            color: "auto",
-            space: 1,
-            value: "single",
-            size: 6,
-        },
-    },*/
             children: [
                 new ExternalHyperlink({
                     children: [
@@ -280,12 +232,12 @@ class DocData {
                 }),
             ],
             //alignment: AlignmentType.LEFT,
-            shading: {
+            /*shading: {
                 type: ShadingType.REVERSE_DIAGONAL_STRIPE,
                 color: "00FFFF",
                 fill: "FF0000",
-                //background-color: #FFFFFF;
-            },
+                background-color: #FFFFFF;
+            },*/
         });
     }
     static getFooterL() {

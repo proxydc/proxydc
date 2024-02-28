@@ -44,10 +44,10 @@ class DocTable {
                                 this.getTitle(),
                                 docData.LineBreak(),
                                 /*docData.getLine("Nom:     ", docjs.familyname),
-                                            docData.getLineBreak(),
-                                            docData.getLine("Prénom: ", docjs.firstname),
-                                            docData.getLineBreak(),
-                                            docData.getLine("Email:   ", docjs.email),*/
+                                                                                            docData.getLineBreak(),
+                                                                                            docData.getLine("Prénom: ", docjs.firstname),
+                                                                                            docData.getLineBreak(),
+                                                                                            docData.getLine("Email:   ", docjs.email),*/
 
                                 docData.LineBreak(),
                                 comp.getSubTitle("Compétences fonctionnelles"),
@@ -122,21 +122,53 @@ class DocTable {
 
         table.addChildElement(tbrow.getExpTitle("Expériences professionnelles"));
         table.addChildElement(tbrow.getBlankTableRowDoubleLineBreak());
-        let counterexp = 0;
+        let counterexp = 1;
+        let nbtasks = 0;
         docjs.experiencesPro.forEach((element) => {
+            if (counterexp % 2 == 0 && docjs.experiencesPro.length - 1 != counterexp) {
+                let count = nbtasks + element.tasks.length;
+                let nbRowBreaks = this.getNbRowBreak(count);
+                alert(
+                    "nbtasks: " +
+                    nbtasks +
+                    " **** count: " +
+                    count +
+                    " **** nbRowBreaks: " +
+                    nbRowBreaks +
+                    " ***** counterexp: " +
+                    counterexp
+                );
+                for (let index = 0; index < nbRowBreaks; index++) {
+                    table.addChildElement(tbrow.getBlankTableRowDoubleLineBreak());
+                }
+            }
+
             table.addChildElement(tbrow.getExpTableRow(element));
             table.addChildElement(tbrow.getBlankTableRowDoubleLineBreak());
-            if (counterexp % 2 && docjs.experiencesPro.length - 1 != counterexp) {
+            if (counterexp % 2 == 0 && docjs.experiencesPro.length - 1 != counterexp) {
+                /*let count = nbtasks + element.tasks.length;
+                        let nbRowBreaks = this.getNbRowBreak(count);
+                        for (let index = 0; index < nbRowBreaks; index++) {
+                            table.addChildElement(tbrow.getBlankTableRowDoubleLineBreak());
+                        }*/
                 table.addChildElement(tbrow.getBlankTableRowPageBreak());
+                nbtasks = 0;
+            } else {
+                //if (!counterexp % 2 && docjs.experiencesPro.length - 1 != counterexp) {
+                nbtasks = element.tasks.length;
+                //}
             }
             counterexp++;
         });
+        if (docjs.experiencesPro != "" && docjs.experiencesPro.length % 2 != 0) {
+            table.addChildElement(tbrow.getBlankTableRowPageBreak());
+        }
         counterexp = 0;
         if (docjs.projectsPerso != "" && docjs.projectsPerso != null) {
             for (let index = 0; index < docjs.projectsPerso.length; index++) {
                 const element = docjs.projectsPerso[index];
                 if (index == 0) {
-                    table.addChildElement(tbrow.getBlankTableRowPageBreak());
+                    //table.addChildElement(tbrow.getBlankTableRowPageBreak());
                     table.addChildElement(tbrow.getExpTitle("Expériences personnelles"));
                     table.addChildElement(tbrow.getBlankTableRowDoubleLineBreak());
                 }
@@ -149,6 +181,24 @@ class DocTable {
             }
         }
         return table;
+    }
+    static getNbRowBreak(nb) {
+        if (nb > 15) return 0;
+        if (nb < 10) return 4;
+        switch (nb) {
+            case 15:
+                return 1;
+            case 14:
+                return 2;
+            case 13:
+                return 3;
+            case 12:
+                return 3;
+            case 11:
+                return 3;
+            case 10:
+                return 3;
+        }
     }
     static getTitleRow() {
         return new TableRow({

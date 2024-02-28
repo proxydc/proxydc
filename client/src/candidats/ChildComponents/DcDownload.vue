@@ -63,9 +63,9 @@ export default {
       // To export into a .docx file
       var filen =
         "DossierCompetences-" +
-        docjs.familyname +
+        docjs.familyname.trim() +
         "-" +
-        docjs.firstname +
+        docjs.firstname.trim() +
         "-" +
         new Date().toLocaleString() +
         ".docx";
