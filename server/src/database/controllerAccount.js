@@ -117,9 +117,10 @@ const deleteAccountById = (req, res) => {
     });
 };
 //put 201
-const updateAccount = (req, res) => {
+const updateAccount = async(req, res) => {
     const id = parseInt(req.params.id);
     const { display_name, pass_word, role_id } = req.body;
+    const encryptedPassword = await tools.GetEncryptedPassword(pass_word);
     pool.query(queries.getAccountById, [id], (error, results) => {
         try {
             const noAccountFound = !results.rows.length;
@@ -127,7 +128,7 @@ const updateAccount = (req, res) => {
                 res.status(202).json("Account does not exist in the database");
             } else {
                 pool.query(
-                    queries.updateAccount, [id, display_name, pass_word, role_id],
+                    queries.updateAccount, [id, display_name, encryptedPassword, role_id],
                     (error, results) => {
                         try {
                             if (error) throw error;
