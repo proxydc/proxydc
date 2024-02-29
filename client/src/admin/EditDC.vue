@@ -29,7 +29,7 @@
               <option v-for="stadc in DcStatusEnum" :value="stadc">{{ stadc }}</option>
             </select>-->
             <select name="name" class="selectpicker show-tick" v-model="model.candidat.dc_status">
-              <option v-for="stadc in DcStatusList" :value="stadc.value">{{ stadc.text }}</option>
+              <option v-for="(stadc,index) in DcStatusList" :value="stadc.value" :key="index">{{ stadc.text }}</option>
             </select>
           </div>
           <br />
