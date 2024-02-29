@@ -55,6 +55,7 @@ export default {
     };
   },
   mounted() {
+    document.getElementById("lbdisplay").focus();
     this.getAccountData(this.$route.params.id);
     $(document).keypress(function (e) {
       if (e.which === 13) {

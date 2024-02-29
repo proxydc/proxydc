@@ -8,7 +8,7 @@
       <form class="was-validated" @submit.prevent="updateCandidat">
         <div class="register">
           <label for="lbfamilyname">Nom</label>
-          <input type="text" v-model="model.candidat.familyname" class="form-control" id="lbfamilyname" disabled />
+          <input type="text" v-model="model.candidat.familyname" class="form-control" id="lbfamilyname" required />
           <label for="lbfirstname">Prénom</label>
           <input type="text" id="lbfirstname" v-model="model.candidat.firstname" placeholder="Enter First Name" required
             class="form-control" />
@@ -74,6 +74,7 @@ export default {
     };
   },
   mounted() {
+    document.getElementById("lbfamilyname").focus();
     this.getCandidatData(this.$route.params.id);
     $(document).keypress(function (e) {
       if (e.which === 13) {
